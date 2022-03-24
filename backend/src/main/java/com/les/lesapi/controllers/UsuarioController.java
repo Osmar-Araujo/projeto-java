@@ -3,6 +3,7 @@ package com.les.lesapi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,6 @@ public class UsuarioController {
 	
 	@PostMapping(value = "/register")
 	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario){
-	 Usuario usu = usuarioService.save(usuario);
-	 return ResponseEntity.ok(usu);
+	 return new ResponseEntity<Usuario>(this.usuarioService.save(usuario),HttpStatus.CREATED);
 	}
 }

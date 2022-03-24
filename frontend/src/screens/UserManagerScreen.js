@@ -12,6 +12,7 @@ export default function UserManagerScreen(props){
 
     useEffect( () => {
       dispatch(enderecosUsuario(userInfo.id))
+      console.log(dispatch)
     },[dispatch])
     //const placeorder = useSelector(state => state.placeorder);
     //const { card } = placeorder;

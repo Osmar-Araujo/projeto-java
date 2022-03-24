@@ -27,12 +27,12 @@ export default function ShippingAddressScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const idUsuario = userInfo.id;
+    const id_usuario = userInfo.id;
 
-    dispatch(saveShippingAddress({ apelido, fullName, idUsuario, address, city, postalCode, state, numero, bairro }));
+    dispatch(saveShippingAddress({ apelido, fullName,id_usuario, address, city, postalCode, state, numero, bairro }));
     props.history.push('/payment');
 
-    dispatch(registerAddress(apelido, idUsuario, address, city, postalCode, state, numero, bairro));
+    dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro));
   }
 
   /*

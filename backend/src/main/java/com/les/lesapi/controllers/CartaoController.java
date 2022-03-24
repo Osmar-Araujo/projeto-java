@@ -13,33 +13,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.les.lesapi.models.Produto;
-import com.les.lesapi.services.ProdutoService;
+import com.les.lesapi.models.Cartao;
+import com.les.lesapi.services.CartaoService;
 
-@RestController
 @CrossOrigin
-@RequestMapping("/api/products")
-public class ProdutoController {
+@RestController
+@RequestMapping("/api/cards")
+public class CartaoController {
 	
 	@Autowired
-	private ProdutoService produtoService;
+	private CartaoService cartaoService;
 	
-
 	@GetMapping
-	public ResponseEntity<List<Produto>> findAll(){
-		List<Produto> list = produtoService.findAll();
+	public ResponseEntity<List<Cartao>> findAll(){
+		List<Cartao> list = cartaoService.findAll();
 		return ResponseEntity.ok(list);
 	}
 	
-	@PostMapping
-	public ResponseEntity<Produto> save(@RequestBody Produto produto){
-	 return new ResponseEntity<Produto>(this.produtoService.save(produto),HttpStatus.CREATED);
+	@PostMapping(value = "/cadastrar")
+	public ResponseEntity<Cartao> save(@RequestBody Cartao cartao){
+		return new ResponseEntity<Cartao>(this.cartaoService.save(cartao),HttpStatus.CREATED);
 	}
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Produto> findOne(@PathVariable("id") Integer id){
-		Produto prod = produtoService.findOne(id);
-		return ResponseEntity.ok(prod);
+	@GetMapping(value = "/{idUsuario}")
+	public ResponseEntity<List<Cartao>> findAllByIdUsuario(@PathVariable("idUsuario") Integer idUsuario){
+		List<Cartao> list = cartaoService.findAllByIdUsuario(idUsuario);
+		return ResponseEntity.ok(list);
 	}
 
 }
