@@ -11,11 +11,10 @@ export default function UserManagerScreen(props){
     
 
     useEffect( () => {
-      dispatch(enderecosUsuario(userInfo.id))
-      console.log(dispatch)
+      const enderecos = dispatch(enderecosUsuario(userInfo.id))
+      
     },[dispatch])
-    //const placeorder = useSelector(state => state.placeorder);
-    //const { card } = placeorder;
+    
 
     return(  
         <div>
@@ -67,10 +66,9 @@ export default function UserManagerScreen(props){
             <li>
               <div className="card card-body">
                 <h2>Endereços Cadastrados</h2>
-                <p >
-                  <strong>Apelido: </strong>
-                  {}
-                </p>
+                <table>
+
+                </table>
                 <button>Editar Perfil</button>
               </div>
             </li>

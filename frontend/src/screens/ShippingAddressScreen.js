@@ -36,6 +36,7 @@ export default function ShippingAddressScreen(props) {
   }
 
   /*
+  
   const{setValue} = useForm();
   const checkCEP = (e) =>{
     const cep = e.target.value.replace(/\D/g,'');
@@ -145,6 +146,7 @@ export default function ShippingAddressScreen(props) {
           <button className="primary" type="submit">Continuar</button>
         </div>
       </form>
+      
     </div>
   );
 }

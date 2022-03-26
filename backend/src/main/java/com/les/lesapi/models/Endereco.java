@@ -29,7 +29,6 @@ public class Endereco implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
-	
 	private String address;
 	private String city; 
 	private String postalCode;
@@ -40,7 +39,5 @@ public class Endereco implements Serializable {
 	@JsonBackReference
 	public Usuario getUsuario() {
 		return usuario;
-	}
-	
-	
+	}	
 }

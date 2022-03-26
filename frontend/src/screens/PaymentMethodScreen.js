@@ -13,7 +13,6 @@ export default function PaymentMethodScreen(props) {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, paymentMethod } = cart;
 
-
   if (!shippingAddress.address) {
     props.history.push('shipping');
   }
@@ -21,19 +20,19 @@ export default function PaymentMethodScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-
     const idUsuario = userInfo.id;
 
-    dispatch(savePaymentMethod({ idUsuario, number, cardHolderName, cvc, dueData }));
+    dispatch(savePaymentMethod({ idUsuario, bandeira, number, cardHolderName, cvc, dueData }));
     props.history.push('/placeorder');
 
-    dispatch(registerPayCard(idUsuario, number, cardHolderName, cvc, dueData));
+    dispatch(registerPayCard(idUsuario, bandeira, number, cardHolderName, cvc, dueData));
   };
 
   const [number, setNumber] = useState(paymentMethod.number);
   const [cardHolderName, setCardHolderName] = useState(paymentMethod.cardHolderName);
   const [cvc, setCvc] = useState(paymentMethod.cvc);
   const [dueData, setDueDate] = useState(paymentMethod.dueData);
+  const [bandeira, setBandeira] = useState(paymentMethod.bandeira);
 
 
   return (
@@ -64,6 +63,20 @@ export default function PaymentMethodScreen(props) {
           />
         </div>
         <div>
+        <label htmlFor="bandeira">Bandeira do Cartão</label>
+        <select
+            id="bandeira"  
+            required
+            onChange={(e) => setBandeira(e.target.value)}>
+            <option value=" ">Selecione</option>
+            <option value="Visa">Visa</option>
+            <option value="Master Card">Master Card</option>
+            <option value="American Express">American Express</option>
+            <option value="Elo">Elo</option>
+            <option value="Hipercard">Hipercard</option>
+          </select>
+          </div> 
+        <div>
           <label htmlFor="cvc">CVC do Cartão</label>
           <input
             type="number"
@@ -76,7 +89,7 @@ export default function PaymentMethodScreen(props) {
         <div>
           <label htmlFor="dueDate">Data de Vencimento do Cartão</label>
           <input
-            type="date"
+            type="text"
             id="dueData"
             placeholder="Entre com a data de vencimento do Cartão"
             value={dueData}
