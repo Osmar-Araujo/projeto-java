@@ -5,11 +5,11 @@ export const register = (name, dtNasc, genero, cpf, tipoTel, tel, email, passwor
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, dtNasc, genero, cpf, tipoTel, tel, email, password, isAdmin } });
   try {
     const { data } = await Axios.post('/api/users/register', {
-      name, 
-      dtNasc, 
-      genero, 
-      cpf, 
-      tipoTel, 
+      name,
+      dtNasc,
+      genero,
+      cpf,
+      tipoTel,
       tel,
       email,
       password,
@@ -29,12 +29,13 @@ export const register = (name, dtNasc, genero, cpf, tipoTel, tel, email, passwor
   }
 };
 
-export const signin = (email, password) => async (dispatch) => {
-  dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+export const signin = (username, password) => async (dispatch) => {
+  dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } });
   try {
-    const { data } = await Axios.post('/login', { email, password });
+    const { data } = await Axios.post('/api/users/login', { username, password });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
+    console.log(data);
   } catch (error) {
     dispatch({
       type: USER_SIGNIN_FAIL,

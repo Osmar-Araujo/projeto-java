@@ -7,6 +7,7 @@ import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 export default function ShippingAddressScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const token = userInfo.token;
   const cart = useSelector(state => state.cart);
   const { shippingAddress } = cart;
 
@@ -29,10 +30,10 @@ export default function ShippingAddressScreen(props) {
     e.preventDefault();
     const id_usuario = userInfo.id;
 
-    dispatch(saveShippingAddress({ apelido, fullName,id_usuario, address, city, postalCode, state, numero, bairro }));
+    dispatch(saveShippingAddress({ apelido, fullName, id_usuario, address, city, postalCode, state, numero, bairro }));
     props.history.push('/payment');
 
-    dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro));
+    dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro, token));
   }
 
   /*
@@ -146,7 +147,7 @@ export default function ShippingAddressScreen(props) {
           <button className="primary" type="submit">Continuar</button>
         </div>
       </form>
-      
+
     </div>
   );
 }
