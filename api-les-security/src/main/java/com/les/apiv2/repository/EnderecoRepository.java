@@ -11,6 +11,6 @@ import com.les.apiv2.entities.Endereco;
 @Repository
 public interface EnderecoRepository  extends JpaRepository<Endereco, Integer>{
 	
-	@Query(value="Select e from Endereco e where e.usuario.id = id_usuario")
+	@Query(value="Select e from Endereco e join Usuario u on e.usuario.id = u.id where e.usuario.id = ?1") 
 	public List<Endereco> findAllByIdUsuario(Integer id_usuario);
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +34,10 @@ public class UsuarioController {
 	@PostMapping(value = "/register")
 	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario){
 	 return new ResponseEntity<Usuario>(this.usuarioService.save(usuario),HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value="/{id}")
+	public ResponseEntity<Usuario> encontraUm(@PathVariable ("id") Integer id){
+		return new ResponseEntity<Usuario>(this.usuarioService.finOne(id), HttpStatus.OK);
 	}
 }

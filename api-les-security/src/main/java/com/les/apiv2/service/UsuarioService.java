@@ -1,6 +1,7 @@
 package com.les.apiv2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,4 +28,8 @@ BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return usuarioRepository.save(usuario);
 	}
 
+	public Usuario finOne(Integer id) {
+		Optional<Usuario> usu =  usuarioRepository.findById(id);
+		return usu.get();
+	}
 }

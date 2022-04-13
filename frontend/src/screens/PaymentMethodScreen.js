@@ -8,6 +8,8 @@ export default function PaymentMethodScreen(props) {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const idUsuario = userInfo.id;
+  const token = userInfo.token;
 
 
   const cart = useSelector((state) => state.cart);
@@ -20,12 +22,12 @@ export default function PaymentMethodScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const idUsuario = userInfo.id;
+
 
     dispatch(savePaymentMethod({ idUsuario, bandeira, number, cardHolderName, cvc, dueData }));
     props.history.push('/placeorder');
-
-    dispatch(registerPayCard(idUsuario, bandeira, number, cardHolderName, cvc, dueData));
+    console.log(userSignin)
+    dispatch(registerPayCard(idUsuario, bandeira, number, cardHolderName, cvc, dueData, token));
   };
 
   const [number, setNumber] = useState(paymentMethod.number);
@@ -63,9 +65,9 @@ export default function PaymentMethodScreen(props) {
           />
         </div>
         <div>
-        <label htmlFor="bandeira">Bandeira do Cartão</label>
-        <select
-            id="bandeira"  
+          <label htmlFor="bandeira">Bandeira do Cartão</label>
+          <select
+            id="bandeira"
             required
             onChange={(e) => setBandeira(e.target.value)}>
             <option value=" ">Selecione</option>
@@ -75,7 +77,7 @@ export default function PaymentMethodScreen(props) {
             <option value="Elo">Elo</option>
             <option value="Hipercard">Hipercard</option>
           </select>
-          </div> 
+        </div>
         <div>
           <label htmlFor="cvc">CVC do Cartão</label>
           <input
