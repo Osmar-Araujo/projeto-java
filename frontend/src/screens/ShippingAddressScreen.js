@@ -36,27 +36,15 @@ export default function ShippingAddressScreen(props) {
     dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro, token));
   }
 
-  /*
-  
-  const{setValue} = useForm();
-  const checkCEP = (e) =>{
-    const cep = e.target.value.replace(/\D/g,'');
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    setValue('address', data.logradouro);
-    setValue('city', data.city);
-    setValue('postalCode', data.cep);
-    setValue('state', data.uf);
-    setFocus('numero')
-    });
+  const handleRedirectAddress = (e) =>{
+    e.preventDefault();
+    props.history.push('/savedAddress');
   }
-  */
 
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
+      <button onClick={handleRedirectAddress}>Utilizar um endereço cadastrado</button>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Endereço de Envio</h1>
@@ -88,7 +76,6 @@ export default function ShippingAddressScreen(props) {
             id="postalCode"
             placeholder="Entre com o CEP"
             value={postalCode}
-            //onBlur={checkCEP}
             onChange={(e) => setPostalCode(e.target.value)} required
           />
         </div>

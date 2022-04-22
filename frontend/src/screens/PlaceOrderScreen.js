@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 import { Link } from "react-router-dom";
 
@@ -8,12 +8,20 @@ export default function PlaceOrderScreen(props) {
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
+  const toPrice = (num) => Number(num.toFixed(2)); 
+  cart.itemsPrice = toPrice(
+    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+  );
+  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
+  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+
+  const dispatch = useDispatch();
   /*
-  const toPrice = (num) => Number(num.toFixed(2));
-  cart.itemsPrice = toPrice(cart.itemsPrice.reduce((a, c) => a + c.qty * c.price, 0));
-  cart.shippingAddress = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.totalPrice = cart.itemsPrice + cart.shippingAddress;
-  */
+  const placeOrderHandler = () => {
+    dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+  }; */
+ 
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -28,7 +36,7 @@ export default function PlaceOrderScreen(props) {
                   {cart.shippingAddress.fullName} <br />
                   <strong>Apelido: </strong>
                   {cart.shippingAddress.apelido}
-                  <strong>Endereço: </strong>
+                  <strong> Endereço: </strong>
                   {cart.shippingAddress.address},{cart.shippingAddress.numero},{cart.shippingAddress.city},{" "}
                   {cart.shippingAddress.postalCode},{cart.shippingAddress.state}
                 </p>
@@ -78,6 +86,47 @@ export default function PlaceOrderScreen(props) {
           </ul>
         </div>
       </div>
+      <div className="col-2">
+          <div className="card card-body">
+            <ul>
+              <li>
+                <h2>Resumo da compra</h2>
+              </li>
+              <li>
+                <div className="row">
+                  <div>Valor Itens</div>
+                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div>Taxa de envio</div>
+                  <div>${cart.taxPrice.toFixed(2)}</div>
+                </div>
+              </li>
+              <li>
+                <div className="row">
+                  <div>
+                    <strong>Total</strong>
+                  </div>
+                  <div>
+                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  //onClick={placeOrderHandler}
+                  className="primary block"
+                  disabled={cart.cartItems.length === 0}
+                >
+                  Place Order
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
     </div>
   );
 }

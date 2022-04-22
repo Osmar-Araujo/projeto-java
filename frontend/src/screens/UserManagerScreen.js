@@ -69,7 +69,7 @@ export default function UserManagerScreen(props) {
                     <div>
                       <div>
                         {payCards.map((c) => (
-                          <div>
+                          <div key={c.id}>
                             <h2>Dados Cartão</h2>
                             <p>
                               <strong>Titular: </strong>
@@ -102,8 +102,12 @@ export default function UserManagerScreen(props) {
                     <div>
                       <div>
                         {address.map((s) => (
-                          <div>
+                          <div key={s.id}>
                             <h2>Dados Endereço</h2>
+                            <p>
+                              <strong>Apelido: </strong>
+                              {s.apelido}
+                            </p>
                             <p>
                               <strong>Endereço: </strong>
                               {s.address}
