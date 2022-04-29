@@ -22,12 +22,9 @@ export default function PaymentMethodScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-
-
     dispatch(savePaymentMethod({ idUsuario, bandeira, number, cardHolderName, cvc, dueData }));
-    props.history.push('/placeorder');
-    console.log(userSignin)
     dispatch(registerPayCard(idUsuario, bandeira, number, cardHolderName, cvc, dueData, token));
+    props.history.push('/placeorder');
   };
 
   const [number, setNumber] = useState(paymentMethod.number);
@@ -36,10 +33,15 @@ export default function PaymentMethodScreen(props) {
   const [dueData, setDueDate] = useState(paymentMethod.dueData);
   const [bandeira, setBandeira] = useState(paymentMethod.bandeira);
 
+  const handleRedirectCards = (e) =>{
+    e.preventDefault();
+    props.history.push('/savedCards');
+  }
 
   return (
     <div>
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
+      <button onClick={handleRedirectCards}>Utilizar cartão cadastrado</button>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Pagamento com Cartão</h1>

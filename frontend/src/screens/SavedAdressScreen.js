@@ -6,8 +6,6 @@ import MessageBox from "../components/boxes/MessageBox";
 import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 import { saveShippingAddress } from "../actions/cartActions";
 
-
-
 export default function UserManagerScreen(props) {
     const cart = useSelector(state => state.cart);
     const { shippingAddress } = cart;

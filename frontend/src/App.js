@@ -11,6 +11,8 @@ import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import UserManagerScreen from './screens/UserManagerScreen';
 import SavedAddressScreen from './screens/SavedAdressScreen';
+import SavedCardsScreen from './screens/SavedCardsScreen';
+import OrderScreen from './screens/OrderScreen';
 
 function App() {
 
@@ -65,6 +67,8 @@ function App() {
                     </div>
                 </header>
                 <main>
+                    <Route path="/savedCards" component={SavedCardsScreen}></Route>
+                    <Route path="/savedAddress" component={SavedAddressScreen}></Route>
                     <Route path="/usuarios" component={UserManagerScreen}exact></Route>
                     <Route path="/cart/:id?" component={CartScreen}></Route>
                     <Route path="/product/:id" component={ProductScreen}></Route>
@@ -73,8 +77,8 @@ function App() {
                     <Route path="/shipping" component={ShippingAddressScreen}></Route>
                     <Route path="/payment" component={PaymentMethodScreen}></Route>
                     <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+                    <Route path="/order" component={OrderScreen}></Route>
                     <Route path="/" component={HomeScreen} exact></Route>
-                    <Route path="/savedAddress" component={SavedAddressScreen}></Route>
                 </main>
                 <footer className="row center">Cria Software<span>&reg;</span></footer>
             </div>

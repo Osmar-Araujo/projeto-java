@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 import { Link } from "react-router-dom";
+import {createOrder} from "../actions/orderActions";
 
 export default function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -12,15 +13,15 @@ export default function PlaceOrderScreen(props) {
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  cart.taxPrice = toPrice(0.10 * cart.itemsPrice);
+  cart.totalPrice = cart.itemsPrice + cart.taxPrice;
 
   const dispatch = useDispatch();
-  /*
+
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
-  }; */
+        
+  }; 
  
   return (
     <div>
@@ -56,8 +57,9 @@ export default function PlaceOrderScreen(props) {
               </div>
             </li>
             <li>
+              <div className="col-2">
               <div className="card card-body">
-                <h2>Item(ns) do Pedido</h2>
+                <h2>Resumo do Pedido</h2>
                 <ul>
                   {cart.cartItems.map((item) => (
                     <li key={item.product}>
@@ -82,11 +84,12 @@ export default function PlaceOrderScreen(props) {
                   ))}
                 </ul>
               </div>
+              </div>
             </li>
           </ul>
         </div>
       </div>
-      <div className="col-2">
+      <div className="col-1">
           <div className="card card-body">
             <ul>
               <li>
@@ -94,7 +97,7 @@ export default function PlaceOrderScreen(props) {
               </li>
               <li>
                 <div className="row">
-                  <div>Valor Itens</div>
+                  <div>Valor da compra</div>
                   <div>${cart.itemsPrice.toFixed(2)}</div>
                 </div>
               </li>
@@ -117,11 +120,11 @@ export default function PlaceOrderScreen(props) {
               <li>
                 <button
                   type="button"
-                  //onClick={placeOrderHandler}
+                  onClick={placeOrderHandler}
                   className="primary block"
                   disabled={cart.cartItems.length === 0}
                 >
-                  Place Order
+                  Fechar Pedido
                 </button>
               </li>
             </ul>
