@@ -41,7 +41,7 @@ public class EnderecoController {
 		return ResponseEntity.ok(list);
 	}
 	
-	@GetMapping(value = "/{apelido}")
+	@GetMapping(value = "/apelido/{apelido}")
 	public ResponseEntity<Endereco> findByApelido (@PathVariable ("apelido") String apelido){
 		return new ResponseEntity<Endereco>(this.enderecoService.findByApelido(apelido),HttpStatus.OK);
 	}

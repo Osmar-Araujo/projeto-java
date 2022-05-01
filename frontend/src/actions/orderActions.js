@@ -20,7 +20,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
         authorization: `Bearer ${userInfo.token}`,
       },
     });
-    console.log(data);
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem('cartItems');

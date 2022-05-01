@@ -38,5 +38,5 @@ public class Endereco implements Serializable {
 	@JsonBackReference
 	public Usuario getUsuario() {
 		return usuario;
-	}	
+	}
 }

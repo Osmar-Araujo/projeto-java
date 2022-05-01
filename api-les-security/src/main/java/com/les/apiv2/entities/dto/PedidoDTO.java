@@ -24,16 +24,20 @@ public class PedidoDTO implements Serializable {
 	
 	private Integer id;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date dataPedidoDate;
+	private Date dataPedido;
+	private OrderStatus status;
 	private Endereco endereco;
 	private Usuario usuario;
 	private Cartao cartao;
-	private OrderStatus status;
 	private List<Produto> produtos = new ArrayList<>();
+	
+	public PedidoDTO() {
+		
+	}
 	
 	public PedidoDTO (Pedido pedido) {
 		id = pedido.getId();
-		dataPedidoDate = pedido.getDataPedidoDate();
+		dataPedido = pedido.getDataPedido();
 		endereco = pedido.getEndereco();
 		usuario = pedido.getUsuario();
 		cartao = pedido.getCartao();

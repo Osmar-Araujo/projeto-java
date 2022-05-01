@@ -40,6 +40,11 @@ public class CartaoController {
 		List<Cartao> list = cartaoService.findAllByIdUsuario(idUsuario);
 		return ResponseEntity.ok(list);
 	}
+	
+	@GetMapping(value = "/number/{number}")
+	public ResponseEntity<Cartao> findByNumber (@PathVariable ("number") Long number){
+		return new ResponseEntity<Cartao>(this.cartaoService.findByNumber(number),HttpStatus.OK);
+	}
 
 }
 
