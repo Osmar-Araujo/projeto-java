@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.les.apiv2.entities.OrderStatus;
 import com.les.apiv2.entities.Pedido;
 import com.les.apiv2.entities.Produto;
 import com.les.apiv2.entities.dto.PedidoDTO;
+import com.les.apiv2.entities.dto.ProdutoDTO;
 import com.les.apiv2.repository.PedidoRepository;
 import com.les.apiv2.repository.ProdutoRepository;
 
@@ -32,8 +34,8 @@ public class PedidoService {
 	
 	@Transactional
 	public PedidoDTO insert(PedidoDTO dto) {
-		Pedido pedido = new Pedido(null, dto.getDataPedido(), dto.getStatus(), dto.getEndereco(), dto.getUsuario(), dto.getCartao());
-		for (Produto p : dto.getProdutos()) {
+		Pedido pedido = new Pedido(null, OrderStatus.PENDENTE, dto.getEndereco(), dto.getUsuario(), dto.getCartao());
+		for (ProdutoDTO p : dto.getProdutos()) {
 			Optional<Produto> produto = produtoRep.findById(p.getId());
 			pedido.getProdutos().add(produto.get());
 		}

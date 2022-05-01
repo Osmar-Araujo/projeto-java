@@ -12,7 +12,6 @@ import com.les.apiv2.entities.Cartao;
 import com.les.apiv2.entities.Endereco;
 import com.les.apiv2.entities.OrderStatus;
 import com.les.apiv2.entities.Pedido;
-import com.les.apiv2.entities.Produto;
 import com.les.apiv2.entities.Usuario;
 
 import lombok.Data;
@@ -29,7 +28,7 @@ public class PedidoDTO implements Serializable {
 	private Endereco endereco;
 	private Usuario usuario;
 	private Cartao cartao;
-	private List<Produto> produtos = new ArrayList<>();
+	private List<ProdutoDTO> produtos = new ArrayList<>();
 	
 	public PedidoDTO() {
 		
@@ -42,6 +41,6 @@ public class PedidoDTO implements Serializable {
 		usuario = pedido.getUsuario();
 		cartao = pedido.getCartao();
 		status = pedido.getStatus();
-		produtos = pedido.getProdutos().stream().map(p -> new Produto()).collect(Collectors.toList());
+		produtos = pedido.getProdutos().stream().map(p -> new ProdutoDTO(p)).collect(Collectors.toList());
 	}
 }

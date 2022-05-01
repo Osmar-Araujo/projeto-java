@@ -1,9 +1,9 @@
 package com.les.apiv2.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,16 +41,15 @@ public class Pedido implements Serializable {
 
 	@ManyToMany
 	@JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-	private Set<Produto> produtos = new HashSet<>();
+	private List<Produto> produtos = new ArrayList<>();
 
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, Date dataPedido, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao) {
+	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao) {
 		super();
 		this.id = id;
-		this.dataPedido = dataPedido;
 		this.status = status;
 		this.endereco = endereco;
 		this.usuario = usuario;
