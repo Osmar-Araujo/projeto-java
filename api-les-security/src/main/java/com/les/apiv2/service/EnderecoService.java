@@ -29,4 +29,7 @@ public class EnderecoService {
 		return enderecoRepository.findAllByIdUsuario(Id_usuario);
 	}
 	
+	public Endereco findByApelido(String apelido) {
+		return enderecoRepository.findByApelido(apelido);
+	}
 }
