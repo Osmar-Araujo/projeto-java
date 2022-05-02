@@ -33,5 +33,4 @@ public class Cartao {
 	public Usuario getUsuario() {
 		return usuario;
 	}
-
 }

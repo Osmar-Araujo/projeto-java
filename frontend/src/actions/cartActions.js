@@ -10,7 +10,7 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
       image: data.image,
       price: data.price,
       countInStock: data.countInStock,
-      product: data.id,
+      id: data.id,
       qty,
     },
   });
@@ -23,10 +23,11 @@ export const removeFromCart = (productId) => (dispatch, getState) => {
 };
 
 export const saveShippingAddress = (data) => (dispatch) => {
-  dispatch({type: CART_SAVE_SHIPPING_ADDRESS, payload: data});
+  dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
   localStorage.setItem('shippingAddress', JSON.stringify(data));
 }
 
-export const savePaymentMethod = (data) => (dispatch) =>{
-  dispatch({type: CART_SAVE_PAYMENT_METHOD, payload: data});
+export const savePaymentMethod = (data) => (dispatch) => {
+  dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
+
 }

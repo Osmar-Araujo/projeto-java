@@ -30,4 +30,9 @@ public class Produto implements Serializable {
 	private Integer countInStock;
 	private Float rating;
 	private Integer numReviews;
+	
+	public Produto() {
+		
+	}
+	
 }

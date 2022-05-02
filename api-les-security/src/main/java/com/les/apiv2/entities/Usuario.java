@@ -34,6 +34,7 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dtNasc;
 	private String genero;

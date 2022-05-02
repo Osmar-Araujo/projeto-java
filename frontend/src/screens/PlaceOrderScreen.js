@@ -1,19 +1,32 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 import { Link } from "react-router-dom";
+import { createOrder } from "../actions/orderActions";
 
 export default function PlaceOrderScreen(props) {
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const cart = useSelector((state) => state.cart);
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
-  /*
   const toPrice = (num) => Number(num.toFixed(2));
-  cart.itemsPrice = toPrice(cart.itemsPrice.reduce((a, c) => a + c.qty * c.price, 0));
-  cart.shippingAddress = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.totalPrice = cart.itemsPrice + cart.shippingAddress;
-  */
+  cart.itemsPrice = toPrice(
+    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+  );
+  cart.taxPrice = toPrice(0.10 * cart.itemsPrice);
+  cart.totalPrice = cart.itemsPrice + cart.taxPrice;
+
+  const dispatch = useDispatch();
+
+  const placeOrderHandler = (e) => {
+    e.preventDefault();
+    dispatch(createOrder(cart.shippingAddress.id, cart.paymentMethod.id, cart.cartItems, userInfo.id, cart.itemsPrice, cart.totalPrice, cart.taxPrice, userInfo.token));
+    props.history.push('/order');
+  };
+
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -28,7 +41,7 @@ export default function PlaceOrderScreen(props) {
                   {cart.shippingAddress.fullName} <br />
                   <strong>Apelido: </strong>
                   {cart.shippingAddress.apelido}
-                  <strong>Endereço: </strong>
+                  <strong> Endereço: </strong>
                   {cart.shippingAddress.address},{cart.shippingAddress.numero},{cart.shippingAddress.city},{" "}
                   {cart.shippingAddress.postalCode},{cart.shippingAddress.state}
                 </p>
@@ -48,32 +61,75 @@ export default function PlaceOrderScreen(props) {
               </div>
             </li>
             <li>
-              <div className="card card-body">
-                <h2>Item(ns) do Pedido</h2>
-                <ul>
-                  {cart.cartItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
+              <div className="col-2">
+                <div className="card card-body">
+                  <h2>Resumo do Pedido</h2>
+                  <ul>
+                    {cart.cartItems.map((item) => (
+                      <li key={item.product}>
+                        <div className="row">
+                          <div>
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="small"
+                            ></img>
+                          </div>
+                          <div className="min-30">
+                            <Link to={`/product/${item.product}`}>
+                              {item.name}
+                            </Link>
+                          </div>
+                          <div>
+                            {item.qty} x ${item.price} = ${item.qty * item.price}
+                          </div>
                         </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
-                        <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="col-1">
+        <div className="card card-body">
+          <ul>
+            <li>
+              <h2>Resumo da compra</h2>
+            </li>
+            <li>
+              <div className="row">
+                <div>Valor da compra</div>
+                <div>${cart.itemsPrice.toFixed(2)}</div>
+              </div>
+            </li>
+            <li>
+              <div className="row">
+                <div>Taxa de envio</div>
+                <div>${cart.taxPrice.toFixed(2)}</div>
+              </div>
+            </li>
+            <li>
+              <div className="row">
+                <div>
+                  <strong>Total</strong>
+                </div>
+                <div>
+                  <strong>${cart.totalPrice.toFixed(2)}</strong>
+                </div>
+              </div>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={placeOrderHandler}
+                className="primary block"
+                disabled={cart.cartItems.length === 0}
+              >
+                Fechar Pedido
+              </button>
             </li>
           </ul>
         </div>

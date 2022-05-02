@@ -4,6 +4,7 @@ import {
   PAYCARD_REGISTER_REQUEST,
   PAYCARD_REGISTER_SUCCESS
 } from "../constants/payCardConstants"
+import { CART_SAVE_PAYMENT_METHOD } from "../constants/cartConstants";
 
 
 export const registerPayCard = (id, bandeira, number, cardHolderName, cvc, dueData, token) => async (dispatch) => {
@@ -25,6 +26,22 @@ export const registerPayCard = (id, bandeira, number, cardHolderName, cvc, dueDa
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    });
+  }
+
+  dispatch({ type: PAYCARD_LIST_REQUEST, payload: id });
+  try {
+    const { data } = await Axios.get(`/api/cards/number/${number}`, {
+      headers: {
+        authorization: "Bearer " + token
+      }
+    });
+    dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
+    localStorage.setItem('savePaymentMethod', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: PAYCARD_LIST_FAIL,
+      payload: error.message
     });
   }
 };

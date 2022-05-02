@@ -3,10 +3,11 @@ import React from "react";
 export default function CheckoutSteps(props) {
   return (
     <div className="row checkout-steps">
-      <div className={props.step1 ? 'active': ''}>Login</div>
-      <div className={props.step2 ? 'active': ''}>Endereço de Envio</div>
-      <div className={props.step3 ? 'active': ''}>Pagamento</div>
-      <div className={props.step4 ? 'active': ''}>Finalizando Pedido</div>
+      <div className={props.step1 ? 'active' : ''}>Login</div>
+      <div className={props.step2 ? 'active' : ''}>Endereço de Envio</div>
+      <div className={props.step3 ? 'active' : ''}>Pagamento</div>
+      <div className={props.step4 ? 'active' : ''}>Finalizando Pedido</div>
+      <div className={props.step5 ? 'active' : ''}>Fechar Pedido</div>
     </div>
   );
 }

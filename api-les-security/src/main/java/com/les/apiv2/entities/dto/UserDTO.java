@@ -14,12 +14,12 @@ public class UserDTO {
 	private String name;
     private String email;
     private String token;
+    
 
     public static UserDTO create(Usuario user, String token) {
         ModelMapper modelMapper = new ModelMapper();
         UserDTO dto = modelMapper.map(user, UserDTO.class);
         dto.token = token;
-        System.out.println(dto);
         return dto;
     }
 

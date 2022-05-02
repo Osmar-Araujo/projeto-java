@@ -28,4 +28,8 @@ public class CartaoService {
 		return cartaoRepository.findAllByIdUsuario(IdUsuario);
 	}
 	
+	public Cartao findByNumber (Long number) {
+		return cartaoRepository.findByNumber(number);
+	}
+	
 }
