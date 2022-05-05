@@ -42,5 +42,49 @@ public class PedidoService {
 		pedido = pedidoRep.save(pedido);
 		return new PedidoDTO(pedido);
 	}
+	
+	public List<Pedido> FindByUserId(Integer Id_usuario){
+		return pedidoRep.findByIdUsuario(Id_usuario);
+	}
+	
+	public Pedido findOne (Integer id) {
+		Optional<Pedido> pedido = pedidoRep.findById(id);
+		return pedido.get();
+	}
+	
+	public Pedido setAprovado(Integer id) {
+		Pedido pedido = pedidoRep.getById(id);
+		pedido.setStatus(OrderStatus.APROVADO);
+		pedido = pedidoRep.save(pedido);
+		return pedido;
+	}
+	
+	public Pedido setEnviado(Integer id) {
+		Pedido pedido = pedidoRep.getById(id);
+		pedido.setStatus(OrderStatus.ENVIADO);
+		pedido = pedidoRep.save(pedido);
+		return pedido;
+	}
+	
+	public Pedido setEntregue(Integer id) {
+		Pedido pedido = pedidoRep.getById(id);
+		pedido.setStatus(OrderStatus.ENTREGUE);
+		pedido = pedidoRep.save(pedido);
+		return pedido;
+	}
+	
+	public Pedido setDevolucaoPendente(Integer id) {
+		Pedido pedido = pedidoRep.getById(id);
+		pedido.setStatus(OrderStatus.DEVOLUCAO_PENDENTE);
+		pedido = pedidoRep.save(pedido);
+		return pedido;
+	}
+	
+	public Pedido setDevolvido(Integer id) {
+		Pedido pedido = pedidoRep.getById(id);
+		pedido.setStatus(OrderStatus.DEVOLVIDO);
+		pedido = pedidoRep.save(pedido);
+		return pedido;
+	}
 
 }
