@@ -9,6 +9,9 @@ import { userRegisterReducer, userSigninReducer } from "./reducers/userReducer";
 import { endRegisterReducer, endListReducer } from "./reducers/endReducers";
 import { payCardRegisterReducer, payCardListReducer } from "./reducers/payCardReducer";
 import { orderDetailsReducer, orderCreateReducer } from "./reducers/orderReducers";
+import { orderUserListReducer } from "./reducers/orderReducers";
+import { orderChangeStatusReducer } from "./reducers/orderReducers";
+import { listCupomReducer, registerCupomReducer, detailsCupomReducer } from "./reducers/cupomReducer";
 
 const initialState = {
   userSignin: {
@@ -41,6 +44,11 @@ const reducer = combineReducers({
   payCardList: payCardListReducer,
   createOrder: orderCreateReducer,
   detailsOrder: orderDetailsReducer,
+  ListOrder: orderUserListReducer,
+  changeOrderStatus: orderChangeStatusReducer,
+  createCupom: registerCupomReducer,
+  cupomList: listCupomReducer,
+  cupom: detailsCupomReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

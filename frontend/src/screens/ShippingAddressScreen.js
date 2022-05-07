@@ -30,9 +30,8 @@ export default function ShippingAddressScreen(props) {
     e.preventDefault();
     const id_usuario = userInfo.id;
 
-    //dispatch(saveShippingAddress({ apelido, fullName, id_usuario, address, city, postalCode, state, numero, bairro }));
     props.history.push('/payment');
-
+    dispatch(saveShippingAddress({ apelido, fullName, id_usuario, address, city, postalCode, state, numero, bairro }));
     dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro, token));
   }
 

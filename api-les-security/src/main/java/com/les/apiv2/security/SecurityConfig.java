@@ -38,13 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authManager = authenticationManager();
         
-        //http.csrf().disable().authorizeRequests()
-		//.anyRequest().permitAll();
-        
+   //     http.csrf().disable().authorizeRequests()
+//		.anyRequest().permitAll();
+       
         http
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-        .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
+        .antMatchers("/v2/api-docs", "/configuration/*", "/swagger/*", "/webjars/*")
         .permitAll()
         .antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
         .anyRequest().authenticated()
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(unauthorizedHandler)
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       
+  
     }
 
     @Override

@@ -1,16 +1,22 @@
 import Axios from 'axios';
 import { CART_EMPTY } from '../constants/cartConstants';
 import {
+  ORDER_CHANGE_STATUS_REQUEST,
+  ORDER_CHANGE_STATUS_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_USER_LIST_FAIL,
+  ORDER_USER_LIST_REQUEST,
+  ORDER_USER_LIST_SUCCESS,
 } from '../constants/orderConstants';
+import { createCupom } from './cupomActions';
+
 
 export const createOrder = (shippingAddressId, payCardId, cartItems, userId, itemsPrice, totalPrice, taxPrice, token) => async (dispatch) => {
-  console.log(cartItems)
   dispatch({
     type: ORDER_CREATE_REQUEST,
     payload: {
@@ -55,7 +61,6 @@ export const createOrder = (shippingAddressId, payCardId, cartItems, userId, ite
           authorization: `Bearer ${token}`,
         },
       });
-    console.log(data);
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     //dispatch({ type: CART_EMPTY });
     //localStorage.removeItem('cartItems');
@@ -70,10 +75,37 @@ export const createOrder = (shippingAddressId, payCardId, cartItems, userId, ite
   }
 };
 
-export const detailsOrder = (orderId) => async (dispatch) => {
+export const userListOrder = (userId, token) => async (dispatch) => {
+  dispatch({ type: ORDER_USER_LIST_REQUEST, payload: userId });
+  try {
+    const { data } = await Axios.get(`/api/orders/${userId}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
+    dispatch({ type: ORDER_USER_LIST_SUCCESS, payload: data });
+  }
+  catch (error) {
+    dispatch({
+      type: ORDER_USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}
+
+export const detailsOrder = (orderId, token) => async (dispatch) => {
   dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
   try {
-    const { data } = await Axios.get(`/api/orders/${orderId}`,
+    const { data } = await Axios.get(`/api/orders/pedido/${orderId}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      }
     );
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -84,3 +116,88 @@ export const detailsOrder = (orderId) => async (dispatch) => {
     dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
   }
 };
+
+export const changeOrderStatus = (orderId, token, STATUS, price, userId) => async (dispatch) => {
+  switch (STATUS) {
+    case "APROVADO":
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      try {
+        const { data } = await Axios.patch(`/api/orders/${orderId}/aprovado`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+        dispatch({ type: ORDER_CHANGE_STATUS_SUCCESS, payload: data });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+      }
+      break;
+    case "ENVIADO":
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      try {
+        const { data } = await Axios.patch(`/api/orders/${orderId}/enviado`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+        dispatch({ type: ORDER_CHANGE_STATUS_SUCCESS, payload: data });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+      }
+      break;
+    case "ENTREGUE":
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      try {
+        const { data } = await Axios.patch(`/api/orders/${orderId}/entregue`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+        dispatch({ type: ORDER_CHANGE_STATUS_SUCCESS, payload: data });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+      }
+      break;
+    case "DEVOLVIDO":
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      try {
+        const { data } = await Axios.patch(`/api/orders/${orderId}/devolvido`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        );
+        dispatch({ type: ORDER_CHANGE_STATUS_SUCCESS, payload: data });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+      }
+      dispatch(createCupom(userId, token, price));
+      break;
+    default:
+
+      return null
+  }
+}
