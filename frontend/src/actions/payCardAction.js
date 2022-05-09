@@ -1,6 +1,12 @@
 import Axios from "axios";
 import {
-  PAYCARD_LIST_FAIL, PAYCARD_LIST_REQUEST, PAYCARD_LIST_SUCCESS, PAYCARD_REGISTER_FAIL,
+  PAYCARD_DETAILS_FAIL,
+  PAYCARD_DETAILS_REQUEST,
+  PAYCARD_DETAILS_SUCCESS,
+  PAYCARD_LIST_FAIL,
+  PAYCARD_LIST_REQUEST,
+  PAYCARD_LIST_SUCCESS,
+  PAYCARD_REGISTER_FAIL,
   PAYCARD_REGISTER_REQUEST,
   PAYCARD_REGISTER_SUCCESS
 } from "../constants/payCardConstants"
@@ -58,6 +64,23 @@ export const listPayCardsUsuario = (idUsuario, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PAYCARD_LIST_FAIL,
+      payload: error.message
+    });
+  }
+};
+
+export const detailsPayCard = (id, token) => async (dispatch) => {
+  dispatch({ type: PAYCARD_DETAILS_REQUEST, payload: id });
+  try {
+    const { data } = await Axios.get(`/api/cards/cartao/${id}`, {
+      headers: {
+        authorization: "Bearer " + token
+      }
+    });
+    dispatch({ type: PAYCARD_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PAYCARD_DETAILS_FAIL,
       payload: error.message
     });
   }

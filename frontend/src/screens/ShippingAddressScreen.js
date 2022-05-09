@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from "../actions/cartActions";
-import { registerAddress } from "../actions/enderecoActions";
+import { enderecosUsuario, registerAddress } from "../actions/enderecoActions";
 import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
 
 export default function ShippingAddressScreen(props) {
@@ -10,7 +10,6 @@ export default function ShippingAddressScreen(props) {
   const token = userInfo.token;
   const cart = useSelector(state => state.cart);
   const { shippingAddress } = cart;
-
   if (!userInfo) {
     props.history.push('/signin');
   };
@@ -25,11 +24,11 @@ export default function ShippingAddressScreen(props) {
   const [bairro, setBairro] = useState(shippingAddress.bairro);
 
   const dispatch = useDispatch();
+  const id_usuario = userInfo.id;
+
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const id_usuario = userInfo.id;
-
     props.history.push('/payment');
     dispatch(saveShippingAddress({ apelido, fullName, id_usuario, address, city, postalCode, state, numero, bairro }));
     dispatch(registerAddress(apelido, id_usuario, address, city, postalCode, state, numero, bairro, token));
@@ -37,6 +36,7 @@ export default function ShippingAddressScreen(props) {
 
   const handleRedirectAddress = (e) => {
     e.preventDefault();
+    dispatch(enderecosUsuario(id_usuario, token))
     props.history.push('/savedAddress');
   }
 
@@ -133,7 +133,6 @@ export default function ShippingAddressScreen(props) {
           <button className="primary" type="submit">Continuar</button>
         </div>
       </form>
-
     </div>
   );
 }

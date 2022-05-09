@@ -16,19 +16,18 @@ export default function OrderDetailScreen(props) {
   const orderDetails = useSelector((state) => state.detailsOrder);
   const { order, loading, error } = orderDetails;
   const dispatch = useDispatch();
-  console.log(orderDetails);
 
   const changeStatusHandler = () => {
     dispatch(changeOrderStatus(orderId, token, status, order.totalPrice, userInfo.id));
   }
 
   useEffect(() => {
-    dispatch(detailsOrder(orderId));
+    dispatch(detailsOrder(orderId, token));
   }, [dispatch, orderId]);
 
   return (
     <div>
-      <h1>Order </h1>
+      <h1>Pedido</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (<MessageBox variant="danger">{error}</MessageBox>
@@ -38,31 +37,41 @@ export default function OrderDetailScreen(props) {
             <ul>
               <li>
                 <div className="card card-body">
-                  <h2>Shipping</h2>
+                  <h2>Endereço de Envio/Cobrança</h2>
                   <p>
-                    <strong>Name:</strong>  <br />
-                    <strong>Address: </strong> ,
-                    ,{' '}
-                    ,
-
+                    <strong>Apelido:</strong> {order.endereco.apelido}<br />
+                    <strong>Endereço:</strong>{order.endereco.address} - {order.endereco.numero}<br />
+                    <strong>Código Postal:</strong>{order.endereco.postalCode}<br />
+                    <strong>Bairro:</strong> {order.endereco.bairro}<br />
+                    <strong>Cidade:</strong> {order.endereco.city}<br />
+                    <strong>Estado:</strong> {order.endereco.state}
                   </p>
-
                 </div>
               </li>
               <li>
                 <div className="card card-body">
-                  <h2>Payment</h2>
+                  <h2>Pagamento</h2>
                   <p>
-                    <strong>Method:</strong>
+                    <strong>Número do Cartão:</strong> {order.cartao.number}<br />
+                    <strong>Titular do Cartão:</strong> {order.cartao.cardHolderName}<br />
+                    <strong>Bandeira do Cartão:</strong> {order.cartao.bandeira}<br />
+                    <strong>Data de Vencimento:</strong> {order.cartao.dueData}
                   </p>
-
                 </div>
               </li>
               <li>
                 <div className="card card-body">
-                  <h2>Order Items</h2>
+                  <h2>Items do Pedido</h2>
                   <ul>
-
+                    <div >
+                      {order.produtos.map((prod) => (
+                        <li>
+                          <p>{prod.name}</p>
+                          <p>{prod.category}</p>
+                          <p>{prod.price}</p>
+                        </li>
+                      ))}
+                    </div>
                   </ul>
                 </div>
               </li>
@@ -72,17 +81,16 @@ export default function OrderDetailScreen(props) {
             <div className="card card-body">
               <ul>
                 <li>
-                  <h2>Order Summary</h2>
+                  <h2>Resumo do Pedido</h2>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Items</div>
-                    <div>$</div>
+                    <p>Data do Pedido: {order.dataPedido}</p>
                   </div>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Status: {order.status}</div>
+                    <div>Status Atual: {order.status}</div>
                     <select
                       id="status"
                       required
@@ -98,17 +106,17 @@ export default function OrderDetailScreen(props) {
                 </li>
                 <li>
                   <div className="row">
-                    <div>Tax</div>
-                    <div>$</div>
+                    <div>Taxa de Envio</div>
+                    <div>${order.taxPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
                     <div>
-                      <strong> Order Total</strong>
+                      <strong>Total do Pedido</strong>
                     </div>
                     <div>
-                      <strong>$</strong>
+                      <strong>${order.totalPrice}</strong>
                     </div>
                   </div>
                 </li>

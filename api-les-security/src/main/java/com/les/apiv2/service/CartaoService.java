@@ -1,6 +1,7 @@
 package com.les.apiv2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class CartaoService {
 	
 	public Cartao findByNumber (Long number) {
 		return cartaoRepository.findByNumber(number);
+	}
+	
+	public Cartao findById (Integer id) {
+		Optional<Cartao> cartao = cartaoRepository.findById(id);
+		return cartao.get();
 	}
 	
 }

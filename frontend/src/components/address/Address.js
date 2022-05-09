@@ -1,42 +1,21 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 export default function Address(props) {
   const { address } = props;
+  let history = useHistory();
+
+  const detailsAddressHandler = () => {
+    history.push(`/address/set/${address.id}`);
+  }
+
   return (
     <div key={address.id} className="card">
-      <div>
-        <ul>
-          <li>
-            <div className="card card-body">
-              <h2>Dados Endereço</h2>
-              <p>
-                <strong>Endereço: </strong>
-                {address.address}
-              </p>
-              <p>
-                <strong>Cidade: </strong>
-                {address.city}
-              </p>
-              <p>
-                <strong>Código Postal: </strong>
-                {address.postalCode}
-              </p>
-              <p>
-                <strong>Estado: </strong>
-                {address.state}
-              </p>
-              <p>
-                <strong>Número: </strong>
-                {address.number}
-              </p>
-              <p>
-                <strong>Bairro: </strong>
-                {address.bairro}
-              </p>
-              <button>Editar Perfil</button>
-            </div>
-          </li>
-        </ul>
+      <p className="medium"></p>
+      <div className="card-body">
+        <h2>{address.apelido}</h2>
+        <div className="price">{address.postalCode}</div>
+        <button onClick={detailsAddressHandler}>Acessar</button>
       </div>
     </div>
   );

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeOrderStatus, userListOrder } from '../actions/orderActions';
+import { userListOrder } from '../actions/orderActions';
 import LoadingBox from '../components/boxes/LoadingBox';
 import MessageBox from '../components/boxes/MessageBox';
 import Order from '../components/orders/Order';
 
 export default function ManageOrderScreen(props) {
-
-  const [status, setStatus] = useState('');
-  const [idOrder, setIdOrder] = useState('');
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;

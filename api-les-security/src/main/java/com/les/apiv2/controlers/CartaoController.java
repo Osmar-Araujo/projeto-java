@@ -46,5 +46,9 @@ public class CartaoController {
 		return new ResponseEntity<Cartao>(this.cartaoService.findByNumber(number),HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/cartao/{id}")
+	public ResponseEntity<Cartao> findById (@PathVariable ("id") Integer id){
+		return new ResponseEntity<Cartao>(this.cartaoService.findById(id),HttpStatus.OK);
+	}
 }
 

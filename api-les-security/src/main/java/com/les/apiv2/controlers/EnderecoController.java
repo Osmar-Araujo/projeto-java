@@ -45,4 +45,9 @@ public class EnderecoController {
 	public ResponseEntity<Endereco> findByApelido (@PathVariable ("apelido") String apelido){
 		return new ResponseEntity<Endereco>(this.enderecoService.findByApelido(apelido),HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/endereco/{id}")
+	public ResponseEntity<Endereco> findOneById(@PathVariable ("id") Integer id){
+		return new ResponseEntity<Endereco>(this.enderecoService.findById(id),HttpStatus.OK);
+	}
 }

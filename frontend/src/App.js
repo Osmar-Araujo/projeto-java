@@ -10,10 +10,12 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import UserManagerScreen from './screens/UserManagerScreen';
-import SavedAddressScreen from './screens/SavedAdressScreen';
+import SavedAddressScreen from './screens/SavedAddressScreen';
 import SavedCardsScreen from './screens/SavedCardsScreen';
 import OrderDetailScreen from './screens/OrderDetailScreen';
 import ManageOrderScreen from './screens/ManageOrderScreen';
+import DetailsAddressScreen from './screens/DetailsAddressScreen';
+import DetailsPayCardScreen from './screens/DetailsPayCardSreen';
 
 function App() {
 
@@ -72,6 +74,7 @@ function App() {
                     <Route path="/orders" component={ManageOrderScreen}></Route>
                     <Route path="/savedCards" component={SavedCardsScreen}></Route>
                     <Route path="/savedAddress" component={SavedAddressScreen}></Route>
+                    <Route path="/address/set/:id" component={DetailsAddressScreen}></Route>
                     <Route path="/usuarios" component={UserManagerScreen} exact></Route>
                     <Route path="/cart/:id?" component={CartScreen}></Route>
                     <Route path="/product/:id" component={ProductScreen}></Route>
@@ -79,6 +82,7 @@ function App() {
                     <Route path="/register" component={RegisterScreen}></Route>
                     <Route path="/shipping" component={ShippingAddressScreen}></Route>
                     <Route path="/payment" component={PaymentMethodScreen}></Route>
+                    <Route path="/payCard/set/:id" component={DetailsPayCardScreen}></Route>
                     <Route path="/placeorder" component={PlaceOrderScreen}></Route>
                     <Route path="/" component={HomeScreen} exact></Route>
                 </main>

@@ -24,7 +24,7 @@ export default function PlaceOrderScreen(props) {
   const placeOrderHandler = (e) => {
     e.preventDefault();
     dispatch(createOrder(cart.shippingAddress.id, cart.paymentMethod.id, cart.cartItems, userInfo.id, cart.itemsPrice, cart.totalPrice, cart.taxPrice, userInfo.token));
-    props.history.push('/order');
+    props.history.push('/orders');
   };
 
   return (

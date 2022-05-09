@@ -20,6 +20,7 @@ export default function CartScreen(props) {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
+    console.log(id)
     dispatch(removeFromCart(id));
   }
   const checkoutHandler = () => {
@@ -39,7 +40,7 @@ export default function CartScreen(props) {
             <ul>
               {
                 cartItems.map((item) => (
-                  <li key={item.product}>
+                  <li key={item.id}>
                     <div className="row">
                       <div>
                         <img
@@ -49,14 +50,14 @@ export default function CartScreen(props) {
                         </img>
                       </div>
                       <div className="min-30">
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                        <Link to={`/product/${item.id}`}>{item.name}</Link>
                       </div>
                       <div>
                         <select
                           value={item.qty}
                           onChange={(e) =>
                             dispatch(
-                              addToCart(item.product, Number(e.target.value))
+                              addToCart(item.id, Number(e.target.value))
                             )
                           }
                         >
@@ -72,7 +73,7 @@ export default function CartScreen(props) {
                       <div>
                         <button
                           type="button"
-                          onClick={() => removeFromCartHandler(item.product)}
+                          onClick={() => removeFromCartHandler(item.id)}
                         >Remover</button>
                       </div>
                     </div>

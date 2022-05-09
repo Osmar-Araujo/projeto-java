@@ -5,9 +5,9 @@ import {
   productDetailsReducer,
   productListReducer
 } from "./reducers/productReducers";
-import { userRegisterReducer, userSigninReducer } from "./reducers/userReducer";
-import { endRegisterReducer, endListReducer } from "./reducers/endReducers";
-import { payCardRegisterReducer, payCardListReducer } from "./reducers/payCardReducer";
+import { userRegisterReducer, userSigninReducer, userDetailsReducer, userUpdateReducer } from "./reducers/userReducer";
+import { endRegisterReducer, endListReducer, endDetailsReducer } from "./reducers/endReducers";
+import { payCardRegisterReducer, payCardListReducer, payCardDetailsReducer } from "./reducers/payCardReducer";
 import { orderDetailsReducer, orderCreateReducer } from "./reducers/orderReducers";
 import { orderUserListReducer } from "./reducers/orderReducers";
 import { orderChangeStatusReducer } from "./reducers/orderReducers";
@@ -38,10 +38,14 @@ const reducer = combineReducers({
   cart: cartReducer,
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdate: userUpdateReducer,
   endRegister: endRegisterReducer,
   endList: endListReducer,
+  endDetails: endDetailsReducer,
   payCardRegister: payCardRegisterReducer,
   payCardList: payCardListReducer,
+  payCardDetails: payCardDetailsReducer,
   createOrder: orderCreateReducer,
   detailsOrder: orderDetailsReducer,
   ListOrder: orderUserListReducer,

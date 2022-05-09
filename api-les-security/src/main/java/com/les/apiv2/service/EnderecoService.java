@@ -1,6 +1,7 @@
 package com.les.apiv2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,13 @@ public class EnderecoService {
 		return enderecoRepository.findAllByIdUsuario(Id_usuario);
 	}
 	
+	
 	public Endereco findByApelido(String apelido) {
 		return enderecoRepository.findByApelido(apelido);
+	}
+	
+	public Endereco findById(Integer id) {
+		Optional<Endereco> end = enderecoRepository.findById(id);
+		return end.get();
 	}
 }

@@ -4,7 +4,10 @@ import {
   PAYCARD_REGISTER_REQUEST,
   PAYCARD_LIST_REQUEST,
   PAYCARD_LIST_SUCCESS,
-  PAYCARD_LIST_FAIL
+  PAYCARD_LIST_FAIL,
+  PAYCARD_DETAILS_REQUEST,
+  PAYCARD_DETAILS_SUCCESS,
+  PAYCARD_DETAILS_FAIL
 } from "../constants/payCardConstants"
 
 export const payCardRegisterReducer = (state = {}, action) => {
@@ -27,6 +30,19 @@ export const payCardListReducer = (state = { loading: true, payCards: [] }, acti
     case PAYCARD_LIST_SUCCESS:
       return { loading: false, payCards: action.payload };
     case PAYCARD_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export const payCardDetailsReducer = (state = { loading: true, payCard: {} }, action) => {
+  switch (action.type) {
+    case PAYCARD_DETAILS_REQUEST:
+      return { loading: true };
+    case PAYCARD_DETAILS_SUCCESS:
+      return { loading: false, payCard: action.payload };
+    case PAYCARD_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

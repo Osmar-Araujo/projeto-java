@@ -28,6 +28,5 @@ public class ProdutoService {
 	public Produto findOne(Integer id) {
 		Optional<Produto> prod = produtoRepository.findById(id);
 		return prod.get();
-	
 	}
 }

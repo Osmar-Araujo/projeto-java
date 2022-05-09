@@ -5,7 +5,10 @@ import {
   END_REGISTER_SUCCESS,
   END_REQUEST,
   END_REQUEST_SUCESS,
-  END_REQUEST_FAIL
+  END_REQUEST_FAIL,
+  END_DETAILS_REQUEST,
+  END_DETAILS_SUCCESS,
+  END_DETAILS_FAIL
 } from "../constants/endConstants"
 import { CART_SAVE_SHIPPING_ADDRESS } from "../constants/cartConstants";
 
@@ -64,3 +67,23 @@ export const enderecosUsuario = (idUsuario, token) => async (dispatch) => {
     });
   }
 };
+
+export const detailsAddress = (id, token) => async (dispatch) => {
+  dispatch({ type: END_DETAILS_REQUEST, payload: id });
+  try {
+    const { data } = await Axios.get(`/api/address/endereco/${id}`, {
+      headers: {
+        authorization: "Bearer " + token
+      }
+    });
+    dispatch({ type: END_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: END_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}
