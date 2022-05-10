@@ -44,6 +44,7 @@ public class Usuario implements UserDetails {
 	private String email;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
+	private Boolean ativo = true;
 	
 	 @ManyToMany(fetch = FetchType.EAGER)
 	 @JoinTable(name = "user_roles",
@@ -58,6 +59,15 @@ public class Usuario implements UserDetails {
 	 @JsonManagedReference
 	 @OneToMany(cascade=CascadeType.ALL,mappedBy="usuario", fetch = FetchType.LAZY)
 	 private List<Cartao> cartoes;
+	 
+	 @JsonManagedReference
+	 @OneToMany(cascade=CascadeType.ALL,mappedBy="usuario", fetch = FetchType.LAZY)
+	 private List<Cupom> cupons;
+	 
+	 public Usuario() {
+		 
+	 }
+	 
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
