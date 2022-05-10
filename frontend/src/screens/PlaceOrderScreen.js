@@ -19,6 +19,7 @@ export default function PlaceOrderScreen(props) {
   cart.taxPrice = toPrice(0.10 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.taxPrice;
 
+  console.log(typeof (cart.cartItems[0].qty))
   const dispatch = useDispatch();
 
   const placeOrderHandler = (e) => {
@@ -66,7 +67,7 @@ export default function PlaceOrderScreen(props) {
                   <h2>Resumo do Pedido</h2>
                   <ul>
                     {cart.cartItems.map((item) => (
-                      <li key={item.product}>
+                      <li key={item.id}>
                         <div className="row">
                           <div>
                             <img

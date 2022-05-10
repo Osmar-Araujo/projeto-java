@@ -20,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -34,7 +35,7 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dtNasc;
 	private String genero;
@@ -44,6 +45,7 @@ public class Usuario implements UserDetails {
 	private String email;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
+	private Boolean ativo = true;
 	
 	 @ManyToMany(fetch = FetchType.EAGER)
 	 @JoinTable(name = "user_roles",

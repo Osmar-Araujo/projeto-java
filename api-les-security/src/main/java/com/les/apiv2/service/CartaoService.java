@@ -38,4 +38,7 @@ public class CartaoService {
 		return cartao.get();
 	}
 	
+	public void deletar(Integer id) {
+		cartaoRepository.deleteById(id);
+	}
 }

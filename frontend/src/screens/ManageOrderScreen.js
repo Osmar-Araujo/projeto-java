@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { userListOrder } from '../actions/orderActions';
 import LoadingBox from '../components/boxes/LoadingBox';
 import MessageBox from '../components/boxes/MessageBox';
@@ -22,11 +23,13 @@ export default function ManageOrderScreen(props) {
 
   return (
     <div>
+      <Link to="/usuarios">Retornar</Link>
       <h1>Pedidos</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (<MessageBox variant="danger">{error}</MessageBox>
       ) : (
+
         <div className="row center">
           {order.map((order) => (
             <Order key={order.id} order={order}></Order>

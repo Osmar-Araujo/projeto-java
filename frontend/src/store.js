@@ -5,8 +5,8 @@ import {
   productDetailsReducer,
   productListReducer
 } from "./reducers/productReducers";
-import { userRegisterReducer, userSigninReducer, userDetailsReducer, userUpdateReducer } from "./reducers/userReducer";
-import { endRegisterReducer, endListReducer, endDetailsReducer } from "./reducers/endReducers";
+import { userRegisterReducer, userSigninReducer, userDetailsReducer, userUpdateReducer, userPasswordReducer } from "./reducers/userReducer";
+import { endRegisterReducer, endListReducer, endDetailsReducer, endUpdateReducer, endRemoveReducer } from "./reducers/endReducers";
 import { payCardRegisterReducer, payCardListReducer, payCardDetailsReducer } from "./reducers/payCardReducer";
 import { orderDetailsReducer, orderCreateReducer } from "./reducers/orderReducers";
 import { orderUserListReducer } from "./reducers/orderReducers";
@@ -40,9 +40,12 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdate: userUpdateReducer,
+  passwordUpdate: userPasswordReducer,
   endRegister: endRegisterReducer,
   endList: endListReducer,
   endDetails: endDetailsReducer,
+  endUpdate: endUpdateReducer,
+  endRemove: endRemoveReducer,
   payCardRegister: payCardRegisterReducer,
   payCardList: payCardListReducer,
   payCardDetails: payCardDetailsReducer,

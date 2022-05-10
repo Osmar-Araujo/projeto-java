@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,5 +51,18 @@ public class EnderecoController {
 	@GetMapping(value = "/endereco/{id}")
 	public ResponseEntity<Endereco> findOneById(@PathVariable ("id") Integer id){
 		return new ResponseEntity<Endereco>(this.enderecoService.findById(id),HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/update/{id}")
+	public ResponseEntity<Endereco> editar(@PathVariable ("id") Integer id, @RequestBody Endereco endereco){
+		endereco.setId(id);
+		Endereco end = enderecoService.update(id, endereco);
+		return end == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(end);
+	}
+	
+	@DeleteMapping(value = "/delete/{id}")
+	public ResponseEntity<Void> deleta(@PathVariable ("id") Integer id){
+		enderecoService.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 }

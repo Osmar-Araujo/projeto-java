@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT, USER_UPDATE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/userConstants"
+import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT, USER_UPDATE_FAIL, USER_UPDATE_PASSWORD_FAIL, USER_UPDATE_PASSWORD_REQUEST, USER_UPDATE_PASSWORD_SUCCESS, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/userConstants"
 
 export const register = (name, dtNasc, genero, cpf, tipoTel, tel, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: { name, dtNasc, genero, cpf, tipoTel, tel, email, password } });
@@ -52,7 +52,7 @@ export const signout = () => (dispatch) => {
   dispatch({ type: USER_SIGNOUT })
 }
 
-export const userDetails = (userId, token) => async (dispatch) => {
+export const userDetailsAction = (userId, token) => async (dispatch) => {
   dispatch({ type: USER_DETAILS_REQUEST, payload: { userId } });
   try {
     const { data } = await Axios.get(`/api/users/${userId}`,
@@ -62,7 +62,6 @@ export const userDetails = (userId, token) => async (dispatch) => {
         },
       })
     dispatch({ type: USER_DETAILS_SUCCESS, payload: { data } });
-    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -79,7 +78,6 @@ export const userUpdate = (userId, name, dtNasc, genero, cpf, tipoTel, tel, emai
   try {
     const { data } = await Axios.put(`/api/users/update/${userId}`,
       {
-        id: userId,
         name: name,
         dtNasc: dtNasc,
         genero: genero,
@@ -94,10 +92,33 @@ export const userUpdate = (userId, name, dtNasc, genero, cpf, tipoTel, tel, emai
         },
       })
     dispatch({ type: USER_UPDATE_SUCCESS, payload: { data } });
-    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}
+
+export const userPasswordUpdate = (userId, password, token) => async (dispatch) => {
+  dispatch({ type: USER_UPDATE_PASSWORD_REQUEST, payload: { userId } });
+  try {
+    const { data } = await Axios.patch(`/api/users/${userId}/newpassword`,
+      {
+        password: password,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+    dispatch({ type: USER_UPDATE_PASSWORD_SUCCESS, payload: { data } });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_PASSWORD_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

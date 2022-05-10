@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import { CART_EMPTY } from '../constants/cartConstants';
 import {
   ORDER_CHANGE_STATUS_REQUEST,
@@ -117,15 +117,16 @@ export const detailsOrder = (orderId, token) => async (dispatch) => {
   }
 };
 
-export const changeOrderStatus = (orderId, token, STATUS, price, userId) => async (dispatch) => {
+export const changeOrderStatus = (id, token, STATUS, price, userId) => async (dispatch) => {
   switch (STATUS) {
     case "APROVADO":
-      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      console.log(token)
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: id });
       try {
-        const { data } = await Axios.patch(`/api/orders/${orderId}/aprovado`,
+        const { data } = await Axios.patch(`/api/orders/${id}/aprovado`,
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: "Bearer " + token
             }
           }
         );
@@ -139,12 +140,12 @@ export const changeOrderStatus = (orderId, token, STATUS, price, userId) => asyn
       }
       break;
     case "ENVIADO":
-      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: id });
       try {
-        const { data } = await Axios.patch(`/api/orders/${orderId}/enviado`,
+        const { data } = await Axios.patch(`/api/orders/${id}/enviado`,
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: "Bearer " + token
             }
           }
         );
@@ -158,12 +159,12 @@ export const changeOrderStatus = (orderId, token, STATUS, price, userId) => asyn
       }
       break;
     case "ENTREGUE":
-      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: id });
       try {
-        const { data } = await Axios.patch(`/api/orders/${orderId}/entregue`,
+        const { data } = await Axios.patch(`/api/orders/${id}/entregue`,
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: "Bearer " + token
             }
           }
         );
@@ -177,12 +178,12 @@ export const changeOrderStatus = (orderId, token, STATUS, price, userId) => asyn
       }
       break;
     case "DEVOLVIDO":
-      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: orderId });
+      dispatch({ type: ORDER_CHANGE_STATUS_REQUEST, payload: id });
       try {
-        const { data } = await Axios.patch(`/api/orders/${orderId}/devolvido`,
+        const { data } = await Axios.patch(`/api/orders/${id}/devolvido`,
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: "Bearer " + token
             }
           }
         );

@@ -39,4 +39,20 @@ public class EnderecoService {
 		Optional<Endereco> end = enderecoRepository.findById(id);
 		return end.get();
 	}
+	
+	public Endereco update(Integer id, Endereco endereco) {
+		Endereco end = findById(id);
+			end.setApelido(endereco.getApelido());
+			end.setAddress(endereco.getAddress());
+			end.setBairro(endereco.getBairro());
+			end.setCity(endereco.getCity());
+			end.setNumero(endereco.getNumero());
+			end.setPostalCode(endereco.getPostalCode());
+			end.setState(endereco.getState());
+		return enderecoRepository.save(end);
+	}
+	
+	public void deletar(Integer id) {
+		enderecoRepository.deleteById(id);
+	}
 }

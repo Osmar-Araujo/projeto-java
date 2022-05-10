@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/v2/api-docs", "/configuration/*", "/swagger/*", "/webjars/*")
         .permitAll()
         .antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+        .antMatchers(HttpMethod.PATCH, "/api/orders/**").permitAll()
         .anyRequest().authenticated()
         .and().csrf().disable()
         .addFilter(new JwtAuthenticationFilter(authManager))

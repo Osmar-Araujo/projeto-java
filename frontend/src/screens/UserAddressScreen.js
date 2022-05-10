@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { enderecosUsuario } from '../actions/enderecoActions'
 import LoadingBox from "../components/boxes/LoadingBox";
 import MessageBox from "../components/boxes/MessageBox";
-import CheckoutSteps from "../components/checkoutSteps/CheckoutSteps";
-import Address from "../components/address/Address";
+import AddressUser from "../components/address/AddressUser";
+import { Link } from "react-router-dom";
 
-export default function SavedAddressScreen(props) {
+export default function UserAddressScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const token = userInfo.token;
@@ -21,19 +21,21 @@ export default function SavedAddressScreen(props) {
 
   return (
     <div>
-      <CheckoutSteps step1 step2></CheckoutSteps>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (<MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="card card-body">
-          <h1>Endereços Cadastrados</h1>
-          <div className="row center">
-            {address.map((address) => (
-              <Address key={address.id} address={address}></Address>
-            ))}
+        <>
+          <Link to="/usuarios">Retornar</Link>
+          <div className="card card-body">
+            <h1>Endereços Cadastrados</h1>
+            <div className="row center">
+              {address.map((address) => (
+                <AddressUser key={address.id} address={address} token={token}></AddressUser>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   )

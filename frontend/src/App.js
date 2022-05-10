@@ -16,6 +16,11 @@ import OrderDetailScreen from './screens/OrderDetailScreen';
 import ManageOrderScreen from './screens/ManageOrderScreen';
 import DetailsAddressScreen from './screens/DetailsAddressScreen';
 import DetailsPayCardScreen from './screens/DetailsPayCardSreen';
+import UserDetailsScreen from './screens/UserDetailsScreen';
+import UserPasswordScreen from './screens/UserPasswordScreen';
+import UserAddressScreen from './screens/UserAddressScreen';
+import AddressManageScreen from './screens/AddressManageScreen';
+import UserPayCardScreen from './screens/UserPayCardScreen';
 
 function App() {
 
@@ -28,8 +33,8 @@ function App() {
     const dispatch = useDispatch();
     const signoutHandler = () => {
         dispatch(signout());
-
     }
+
     return (
         <BrowserRouter>
             <div className="grid-container">
@@ -75,6 +80,11 @@ function App() {
                     <Route path="/savedCards" component={SavedCardsScreen}></Route>
                     <Route path="/savedAddress" component={SavedAddressScreen}></Route>
                     <Route path="/address/set/:id" component={DetailsAddressScreen}></Route>
+                    <Route path="/user/address/" component={UserAddressScreen}></Route>
+                    <Route path="/user/paycard/" component={UserPayCardScreen}></Route>
+                    <Route path="/user/change/address/:id" component={AddressManageScreen}></Route>
+                    <Route path="/user/details" component={UserDetailsScreen} exact></Route>
+                    <Route path="/user/password" component={UserPasswordScreen} exact></Route>
                     <Route path="/usuarios" component={UserManagerScreen} exact></Route>
                     <Route path="/cart/:id?" component={CartScreen}></Route>
                     <Route path="/product/:id" component={ProductScreen}></Route>

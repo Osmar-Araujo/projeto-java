@@ -8,7 +8,10 @@ import {
   PAYCARD_LIST_SUCCESS,
   PAYCARD_REGISTER_FAIL,
   PAYCARD_REGISTER_REQUEST,
-  PAYCARD_REGISTER_SUCCESS
+  PAYCARD_REGISTER_SUCCESS,
+  PAYCARD_REMOVE_FAIL,
+  PAYCARD_REMOVE_REQUEST,
+  PAYCARD_REMOVE_SUCCESS
 } from "../constants/payCardConstants"
 import { CART_SAVE_PAYMENT_METHOD } from "../constants/cartConstants";
 
@@ -81,6 +84,23 @@ export const detailsPayCard = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PAYCARD_DETAILS_FAIL,
+      payload: error.message
+    });
+  }
+};
+
+export const removePayCard = (id, token) => async (dispatch) => {
+  dispatch({ type: PAYCARD_REMOVE_REQUEST, payload: id });
+  try {
+    const { data } = await Axios.delete(`/api/cards/delete/${id}`, {
+      headers: {
+        authorization: "Bearer " + token
+      }
+    });
+    dispatch({ type: PAYCARD_REMOVE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PAYCARD_REMOVE_FAIL,
       payload: error.message
     });
   }

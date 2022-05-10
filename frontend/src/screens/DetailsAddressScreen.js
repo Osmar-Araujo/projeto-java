@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { saveShippingAddress } from '../actions/cartActions';
 import { detailsAddress } from '../actions/enderecoActions';
 import LoadingBox from '../components/boxes/LoadingBox';
@@ -13,12 +14,12 @@ export default function DetailsAddressScreen(props) {
 
   const addressId = props.match.params.id;
   const endDetails = useSelector((state) => state.endDetails);
-  const { address, loading, error } = endDetails;
+  const { userAddress, loading, error } = endDetails;
   const dispatch = useDispatch();
 
   const selectAddress = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress(address));
+    dispatch(saveShippingAddress(userAddress));
     props.history.push('/payment');
   }
 
@@ -33,19 +34,21 @@ export default function DetailsAddressScreen(props) {
         <LoadingBox></LoadingBox>
       ) : error ? (<MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="card card-body">
-          <h2>Endereço de Envio/Cobrança</h2>
-          <p>
-            <strong>Apelido:</strong> {address.apelido}<br />
-            <strong>Endereço:</strong>{address.address} - {address.numero}<br />
-            <strong>Código Postal:</strong>{address.postalCode}<br />
-            <strong>Bairro:</strong> {address.bairro}<br />
-            <strong>Cidade:</strong> {address.city}<br />
-            <strong>Estado:</strong> {address.state}
-          </p>
-          <button onClick={selectAddress}>Escolher</button>
-
-        </div>
+        <>
+          <Link to="/savedAddress">Retornar</Link>
+          <div className="card card-body">
+            <h2>Endereço de Envio/Cobrança</h2>
+            <p>
+              <strong>Apelido:</strong> {userAddress.apelido}<br />
+              <strong>Endereço:</strong>{userAddress.address} - {userAddress.numero}<br />
+              <strong>Código Postal:</strong>{userAddress.postalCode}<br />
+              <strong>Bairro:</strong> {userAddress.bairro}<br />
+              <strong>Cidade:</strong> {userAddress.city}<br />
+              <strong>Estado:</strong> {userAddress.state}
+            </p>
+            <button onClick={selectAddress}>Escolher</button>
+          </div>
+        </>
       )}
     </div>
   );
