@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 export default function PayCard(props) {
   const { payCard } = props;
   let history = useHistory();
-  console.log(payCard.id)
 
   const detailsPayCardHandler = () => {
     history.push(`/payCard/set/${payCard.id}`);

@@ -5,10 +5,10 @@ import {
   productDetailsReducer,
   productListReducer
 } from "./reducers/productReducers";
-import { userRegisterReducer, userSigninReducer, userDetailsReducer, userUpdateReducer, userPasswordReducer } from "./reducers/userReducer";
+import { userRegisterReducer, userSigninReducer, userDetailsReducer, userUpdateReducer, userPasswordReducer, userListReducer } from "./reducers/userReducer";
 import { endRegisterReducer, endListReducer, endDetailsReducer, endUpdateReducer, endRemoveReducer } from "./reducers/endReducers";
 import { payCardRegisterReducer, payCardListReducer, payCardDetailsReducer } from "./reducers/payCardReducer";
-import { orderDetailsReducer, orderCreateReducer } from "./reducers/orderReducers";
+import { orderDetailsReducer, orderCreateReducer, orderListReducer } from "./reducers/orderReducers";
 import { orderUserListReducer } from "./reducers/orderReducers";
 import { orderChangeStatusReducer } from "./reducers/orderReducers";
 import { listCupomReducer, registerCupomReducer, detailsCupomReducer } from "./reducers/cupomReducer";
@@ -40,6 +40,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdate: userUpdateReducer,
+  userList: userListReducer,
   passwordUpdate: userPasswordReducer,
   endRegister: endRegisterReducer,
   endList: endListReducer,
@@ -52,6 +53,7 @@ const reducer = combineReducers({
   createOrder: orderCreateReducer,
   detailsOrder: orderDetailsReducer,
   ListOrder: orderUserListReducer,
+  allOrder: orderListReducer,
   changeOrderStatus: orderChangeStatusReducer,
   createCupom: registerCupomReducer,
   cupomList: listCupomReducer,

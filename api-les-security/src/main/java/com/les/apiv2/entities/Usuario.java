@@ -35,8 +35,8 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date dtNasc;
 	private String genero;
 	private String cpf;
@@ -45,6 +45,7 @@ public class Usuario implements UserDetails {
 	private String email;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
+	private Boolean admin = false;
 	private Boolean ativo = true;
 	
 	 @ManyToMany(fetch = FetchType.EAGER)

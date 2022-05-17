@@ -19,5 +19,4 @@ export default function Address(props) {
       </div>
     </div>
   );
-
 }

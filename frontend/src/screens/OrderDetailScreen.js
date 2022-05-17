@@ -11,6 +11,7 @@ export default function OrderDetailScreen(props) {
 
   const token = userInfo.token
   const [status, setStatus] = useState('');
+  const [ok, setOk] = useState(false)
 
   const orderId = props.match.params.id;
   const orderDetails = useSelector((state) => state.detailsOrder);
@@ -21,9 +22,22 @@ export default function OrderDetailScreen(props) {
     dispatch(changeOrderStatus(orderId, token, status, order.totalPrice, userInfo.id));
   }
 
+
+  useEffect(() => {
+    if (loading === false) {
+      setStatus(order.status)
+    }
+  }, [loading])
+
   useEffect(() => {
     dispatch(detailsOrder(orderId, token));
   }, [dispatch, orderId]);
+
+  useEffect(() => {
+    if (status === "ENTREGUE") {
+      setOk(true)
+    }
+  }, [status])
 
   return (
     <div>
@@ -91,17 +105,29 @@ export default function OrderDetailScreen(props) {
                 <li>
                   <div className="row">
                     <div>Status Atual: {order.status}</div>
-                    <select
-                      id="status"
-                      required
-                      onChange={(e) => setStatus(e.target.value)}>
-                      <option value=" ">Selecione</option>
-                      <option value="APROVADO">APROVADO</option>
-                      <option value="ENVIADO">ENVIADO</option>
-                      <option value="ENTREGUE">ENTREGUE</option>
-                      <option value="DEVOLVIDO">DEVOLVIDO</option>
-                    </select>
-                    <button onClick={changeStatusHandler}>Alterar</button>
+                    {
+                      userInfo.admin ? (
+                        <select
+                          id="status"
+                          required
+                          onChange={(e) => setStatus(e.target.value)}>
+                          <option value=" ">Selecione</option>
+                          <option value="APROVADO">APROVADO</option>
+                          <option value="ENVIADO">ENVIADO</option>
+                          <option value="ENTREGUE">ENTREGUE</option>
+                          <option value="DEVOLVIDO">DEVOLVIDO</option>
+                        </select>
+                      ) : ok ? (
+                        <select
+                          id="status"
+                          required
+                          onChange={(e) => setStatus(e.target.value)}>
+                          <option value=" ">Selecione</option>
+                          <option value="DEVOLUÇÃO_PENDENTE">Solicitar Devolução</option>
+                        </select>
+                      ) : <></>
+                    }
+                    <button onClick={changeStatusHandler}>Enviar</button>
                   </div>
                 </li>
                 <li>

@@ -4,34 +4,25 @@ import { userDetailsAction } from "../actions/userActions";
 
 
 
-export default function UserManagerScreen(props) {
+export default function AdminManagerScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const token = userInfo.token;
 
   const dispatch = useDispatch();
 
-  const userPasswordHandler = (e) => {
-    e.preventDefault();
-    props.history.push('/user/password');
-  }
-
-  const userDetailsHandler = (e) => {
-    e.preventDefault();
-    props.history.push('/user/details');
-  }
 
   const orderListHandler = (e) => {
     e.preventDefault();
-    props.history.push('/orders');
+    props.history.push('/adm/orders');
   }
 
-  const addressListHandler = (e) => {
+  const userListHandler = (e) => {
     e.preventDefault();
-    props.history.push('/user/address');
+    props.history.push('/manage/users');
   }
 
-  const payCardListHandler = (e) => {
+  const orderGraphHandler = (e) => {
     e.preventDefault();
     props.history.push('/user/paycard');
   }
@@ -46,34 +37,15 @@ export default function UserManagerScreen(props) {
       <h1>Gerenciamento da Conta</h1>
       <div>
         <div className="row top">
-          <div className="col-2">
-            <ul>
-              <li>
-                <div className="card card-body">
-                  <h2>Dados Pessoais</h2>
-                  <p>
-                    <strong>Nome: </strong>
-                    {userInfo.name}
-                  </p>
-                  <p>
-                    <strong> E-mail: </strong>
-                    {userInfo.email}
-                  </p>
-                  <button onClick={userDetailsHandler}>Editar Perfil</button>
-                  <button onClick={userPasswordHandler}>Alterar Senha</button>
-                </div>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="row top">
           <div className="col-2">
             <ul>
               <li>
                 <div className="card card-body">
-                  <h2>Cartões Cadastrados</h2>
+                  <h2>Gerenciar Usuários</h2>
                   <div>
-                    <button onClick={payCardListHandler}>Visualizar Cartões Cadastrados</button>
+                    <button onClick={userListHandler}>Visualizar Usuários Cadastrados</button>
                   </div>
                 </div>
               </li>
@@ -85,9 +57,9 @@ export default function UserManagerScreen(props) {
             <ul>
               <li>
                 <div className="card card-body">
-                  <h2>Endereços Cadastrados</h2>
+                  <h2>Gráficos de Pedidos</h2>
                   <div>
-                    <button onClick={addressListHandler}>Visualizar Endereços Cadastrados</button>
+                    <button onClick={orderGraphHandler}>Visualizar Gráfico de Pedidos</button>
                   </div>
                 </div>
               </li>
@@ -99,9 +71,9 @@ export default function UserManagerScreen(props) {
             <ul>
               <li>
                 <div className="card card-body">
-                  <h2>Pedidos</h2>
+                  <h2>Gerenciar Pedidos</h2>
                   <div>
-                    <button onClick={orderListHandler}>Visualizar Pedidos Realizados</button>
+                    <button onClick={orderListHandler}>Gerenciar Pedidos Realizados</button>
                   </div>
                 </div>
               </li>

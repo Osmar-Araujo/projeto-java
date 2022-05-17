@@ -25,7 +25,8 @@ export default function DetailsAddressScreen(props) {
 
   useEffect(() => {
     dispatch(detailsAddress(addressId, token));
-  }, [dispatch, addressId]);
+  }, [dispatch, addressId, token]);
+
 
   return (
     <div>

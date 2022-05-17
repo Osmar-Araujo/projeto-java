@@ -21,6 +21,9 @@ import UserPasswordScreen from './screens/UserPasswordScreen';
 import UserAddressScreen from './screens/UserAddressScreen';
 import AddressManageScreen from './screens/AddressManageScreen';
 import UserPayCardScreen from './screens/UserPayCardScreen';
+import AdminManagerScreen from './screens/AdminManagerScreen';
+import AdminManageOrderScreen from './screens/AdminManageOrderScreen';
+import AdminManageUserScreen from './screens/AdminManageUserScreen';
 
 function App() {
 
@@ -67,6 +70,18 @@ function App() {
                                             Minha Conta
                                         </Link>
                                     </li>
+                                    {
+                                        userInfo.admin ? (
+                                            <li>
+                                                <Link to="/admin">
+                                                    Admin
+                                                </Link>
+                                            </li>
+                                        ) : (
+                                            <></>
+                                        )
+                                    }
+
                                 </ul>
                             </div>
                         ) : (
@@ -94,6 +109,9 @@ function App() {
                     <Route path="/payment" component={PaymentMethodScreen}></Route>
                     <Route path="/payCard/set/:id" component={DetailsPayCardScreen}></Route>
                     <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+                    <Route path="/admin" component={AdminManagerScreen}></Route>
+                    <Route path="/manage/users" component={AdminManageUserScreen}></Route>
+                    <Route path="/adm/orders" component={AdminManageOrderScreen}></Route>
                     <Route path="/" component={HomeScreen} exact></Route>
                 </main>
                 <footer className="row center">Cria Software<span>&reg;</span></footer>
