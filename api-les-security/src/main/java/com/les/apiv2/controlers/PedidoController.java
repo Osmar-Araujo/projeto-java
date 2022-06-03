@@ -25,11 +25,6 @@ public class PedidoController {
 	@Autowired
 	private PedidoService pedidoService;
 	
-	@GetMapping
-	public ResponseEntity<List<PedidoDTO>>findAll(){
-		List<PedidoDTO> list = pedidoService.findAll();
-		return ResponseEntity.ok(list);
-	}
 	
 	@PostMapping
 	public ResponseEntity<PedidoDTO> insert (@RequestBody PedidoDTO dto){

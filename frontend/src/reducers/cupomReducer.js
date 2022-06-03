@@ -37,7 +37,7 @@ export const listCupomReducer = (state = { loading: true, cupom: [] }, action) =
   }
 }
 
-export const detailsCupomReducer = (state = { cupom: {}, loading: true }, action) => {
+export const detailsCupomReducer = (state = { cupom: {}, loading: false }, action) => {
   switch (action.type) {
     case CUPOM_DETAILS_REQUEST:
       return { loading: true };

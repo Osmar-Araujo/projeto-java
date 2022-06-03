@@ -80,6 +80,9 @@ export default function CartScreen(props) {
                   </li>
                 ))
               }
+              <MessageBox>
+                Continue suas compras. <Link to="/">Loja</Link>
+              </MessageBox>
             </ul>
           )
         }

@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.les.apiv2.entities.Cartao;
 import com.les.apiv2.entities.Endereco;
+import com.les.apiv2.entities.OrderDetail;
 import com.les.apiv2.entities.OrderStatus;
 import com.les.apiv2.entities.Pedido;
 import com.les.apiv2.entities.Usuario;
@@ -28,10 +28,11 @@ public class PedidoDTO implements Serializable {
 	private Endereco endereco;
 	private Usuario usuario;
 	private Cartao cartao;
-	private List<ProdutoDTO> produtos = new ArrayList<>();
 	private Double itemsPrice;
 	private Double taxPrice;
 	private Double totalPrice;
+	
+	private List<OrderDetail> orderDetails = new ArrayList<>();
 	
 	public PedidoDTO() {
 		
@@ -41,12 +42,12 @@ public class PedidoDTO implements Serializable {
 		id = pedido.getId();
 		dataPedido = pedido.getDataPedido();
 		endereco = pedido.getEndereco();
-		itemsPrice = pedido.getItemsPrice();
 		taxPrice = pedido.getTaxPrice();
 		totalPrice = pedido.getTotalPrice();
 		usuario = pedido.getUsuario();
 		cartao = pedido.getCartao();
 		status = pedido.getStatus();
-		produtos = pedido.getProdutos().stream().map(p -> new ProdutoDTO(p)).collect(Collectors.toList());
+		orderDetails = pedido.getOrderDetails();
+		//produtos = pedido.getProdutos().stream().map(p -> new ProdutoDTO(p)).collect(Collectors.toList());
 	}
 }

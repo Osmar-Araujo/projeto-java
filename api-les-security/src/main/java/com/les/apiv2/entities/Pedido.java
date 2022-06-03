@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "orders")
+@Table(name = "pedidos")
 public class Pedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,28 +45,33 @@ public class Pedido implements Serializable {
 	@OneToOne
 	private Cartao cartao;
 
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private List<OrderDetail> orderDetails = new ArrayList<>();
+	
+	/*
 	@ManyToMany
 	@JoinTable(name = "order_product", joinColumns = {
 			@JoinColumn(name = "order_id", referencedColumnName = "id")}, inverseJoinColumns = {
 					@JoinColumn(name = "product_id", referencedColumnName = "id") })
 	private List<Produto> produtos = new ArrayList<>();
-	private Double itemsPrice;
+	*/
 	private Double taxPrice;
 	private Double totalPrice;
 
 	
 
-	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao, Double itemsPrice,
-			Double taxPrice, Double totalPrice) {
+	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao,
+			Double taxPrice, Double totalPrice, List<OrderDetail> orderDetails) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.endereco = endereco;
 		this.usuario = usuario;
 		this.cartao = cartao;
-		this.itemsPrice = itemsPrice;
 		this.taxPrice = taxPrice;
 		this.totalPrice = totalPrice;
+		this.orderDetails = orderDetails;
+
 	}
 
 }

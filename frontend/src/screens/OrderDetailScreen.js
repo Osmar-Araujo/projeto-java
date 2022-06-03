@@ -11,15 +11,21 @@ export default function OrderDetailScreen(props) {
 
   const token = userInfo.token
   const [status, setStatus] = useState('');
-  const [ok, setOk] = useState(false)
+  const [pendente, setPendente] = useState(false);
+  const [aprovado, setAprovado] = useState(false);
+  const [entregue, setEntregue] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [devolver, setDevolver] = useState(false);
 
   const orderId = props.match.params.id;
   const orderDetails = useSelector((state) => state.detailsOrder);
   const { order, loading, error } = orderDetails;
   const dispatch = useDispatch();
 
-  const changeStatusHandler = () => {
+  const changeStatusHandler = (e) => {
+    e.preventDefault();
     dispatch(changeOrderStatus(orderId, token, status, order.totalPrice, userInfo.id));
+    props.history.push('/adm/orders');
   }
 
 
@@ -27,17 +33,41 @@ export default function OrderDetailScreen(props) {
     if (loading === false) {
       setStatus(order.status)
     }
-  }, [loading])
+  }, [loading]);
 
   useEffect(() => {
     dispatch(detailsOrder(orderId, token));
   }, [dispatch, orderId]);
 
   useEffect(() => {
-    if (status === "ENTREGUE") {
-      setOk(true)
+    if (status === "PENDENTE") {
+      setPendente(true)
     }
-  }, [status])
+  }, [status]);
+
+  useEffect(() => {
+    if (status === "APROVADO") {
+      setAprovado(true)
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (status === "ENTREGUE") {
+      setEntregue(true)
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (status === "ENVIADO") {
+      setEnviado(true)
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (status === "DEVOLUÇÃO_PENDENTE") {
+      setDevolver(true)
+    }
+  }, [status]);
 
   return (
     <div>
@@ -106,28 +136,64 @@ export default function OrderDetailScreen(props) {
                   <div className="row">
                     <div>Status Atual: {order.status}</div>
                     {
-                      userInfo.admin ? (
-                        <select
-                          id="status"
-                          required
-                          onChange={(e) => setStatus(e.target.value)}>
-                          <option value=" ">Selecione</option>
-                          <option value="APROVADO">APROVADO</option>
-                          <option value="ENVIADO">ENVIADO</option>
-                          <option value="ENTREGUE">ENTREGUE</option>
-                          <option value="DEVOLVIDO">DEVOLVIDO</option>
-                        </select>
-                      ) : ok ? (
-                        <select
-                          id="status"
-                          required
-                          onChange={(e) => setStatus(e.target.value)}>
-                          <option value=" ">Selecione</option>
-                          <option value="DEVOLUÇÃO_PENDENTE">Solicitar Devolução</option>
-                        </select>
+                      userInfo.admin && pendente ? (
+                        <div>
+                          <select
+                            id="status"
+                            required
+                            onChange={(e) => setStatus(e.target.value)}>
+                            <option value=" ">Selecione</option>
+                            <option value="APROVADO">APROVADO</option>
+                          </select>
+                          <button onClick={changeStatusHandler}>Enviar</button>
+                        </div>
+                      ) : userInfo.admin && aprovado ? (
+                        <div>
+                          <select
+                            id="status"
+                            required
+                            onChange={(e) => setStatus(e.target.value)}>
+                            <option value=" ">Selecione</option>
+                            <option value="ENVIADO">ENVIADO</option>
+                          </select>
+                          <button onClick={changeStatusHandler}>Enviar</button>
+                        </div>
+                      ) : userInfo.admin && enviado ? (
+                        <div>
+                          <select
+                            id="status"
+                            required
+                            onChange={(e) => setStatus(e.target.value)}>
+                            <option value=" ">Selecione</option>
+                            <option value="ENTREGUE">ENTREGUE</option>
+                          </select>
+                          <button onClick={changeStatusHandler}>Enviar</button>
+                        </div>
+                      ) : userInfo.admin && devolver ? (
+                        <div>
+                          <select
+                            id="status"
+                            required
+                            onChange={(e) => setStatus(e.target.value)}>
+                            <option value=" ">Selecione</option>
+                            <option value="DEVOLVIDO">DEVOLVIDO</option>
+                          </select>
+                          <button onClick={changeStatusHandler}>Enviar</button>
+                        </div>
+                      ) : !userInfo.admin && entregue ? (
+                        <div>
+                          <select
+                            id="status"
+                            required
+                            onChange={(e) => setStatus(e.target.value)}>
+                            <option value=" ">Selecione</option>
+                            <option value="DEVOLUÇÃO_PENDENTE">Solicitar Devolução</option>
+                          </select>
+                          <button onClick={changeStatusHandler}>Enviar</button>
+                        </div>
                       ) : <></>
                     }
-                    <button onClick={changeStatusHandler}>Enviar</button>
+
                   </div>
                 </li>
                 <li>

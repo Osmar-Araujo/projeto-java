@@ -11,9 +11,6 @@ import com.les.apiv2.entities.Pedido;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 	
-	@Query("SELECT DISTINCT obj FROM Pedido obj JOIN FETCH obj.produtos")
-	List<Pedido> findOrderWithProducts();
-	
 	@Query("SELECT p FROM Pedido p join Usuario u on p.usuario.id = u.id where p.usuario.id = ?1")
 	List<Pedido> findByIdUsuario(Integer idUsuario);
 }

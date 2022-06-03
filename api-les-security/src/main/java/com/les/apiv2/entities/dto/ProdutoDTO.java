@@ -1,6 +1,10 @@
 package com.les.apiv2.entities.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.les.apiv2.entities.OrderDetail;
 import com.les.apiv2.entities.Produto;
 import lombok.Data;
 
@@ -19,6 +23,8 @@ public class ProdutoDTO implements Serializable {
 	private Float rating;
 	private Integer numReviews;
 	
+	private List<OrderDetail> orderDetails = new ArrayList<>();
+	
 	public ProdutoDTO(Produto p) {
 		this.id = p.getId();
 		this.name = p.getName();
@@ -30,6 +36,7 @@ public class ProdutoDTO implements Serializable {
 		this.countInStock = p.getCountInStock();
 		this.rating = p.getRating();
 		this.numReviews = p.getNumReviews();
+		this.orderDetails = p.getOrderDetails();
 		}
 	
 	public ProdutoDTO() {

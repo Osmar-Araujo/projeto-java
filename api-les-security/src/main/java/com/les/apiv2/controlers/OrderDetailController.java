@@ -20,23 +20,25 @@ import com.les.apiv2.service.OrderDetailService;
 @RestController
 @RequestMapping("/api/orderDetails")
 public class OrderDetailController {
-
+	
 	@Autowired
 	private OrderDetailService service;
-
-	@PostMapping(value = "/cadastrar")
-	public ResponseEntity<OrderDetail> save(@RequestBody OrderDetail orderDetail) {
-		return new ResponseEntity<OrderDetail>(this.service.save(orderDetail), HttpStatus.CREATED);
+	
+	@PostMapping(value = "/cadastrar", produces = "application/json")
+	public ResponseEntity<OrderDetail> save(@RequestBody OrderDetail orderDetail){
+		return new ResponseEntity<OrderDetail>(this.service.save(orderDetail),HttpStatus.CREATED);
 	}
-
-	@GetMapping
-	public ResponseEntity<List<OrderDetail>> findAll() {
-		List<OrderDetail> list = service.list();
-		return ResponseEntity.ok(list);
+	
+	@GetMapping(value = "/graph")
+	public ResponseEntity<List<OrderDetail>> graph(){
+		List<OrderDetail> od = service.graph();
+		return ResponseEntity.ok(od);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<OrderDetail> findById(@PathVariable("id") Integer id) {
-		return new ResponseEntity<OrderDetail>(this.service.findOneById(id), HttpStatus.OK);
+	public ResponseEntity<OrderDetail> findOne(@PathVariable("id") Integer id){
+		OrderDetail od = service.findOne(id);
+		return ResponseEntity.ok(od);
 	}
+	
 }

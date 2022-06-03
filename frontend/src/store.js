@@ -57,7 +57,7 @@ const reducer = combineReducers({
   changeOrderStatus: orderChangeStatusReducer,
   createCupom: registerCupomReducer,
   cupomList: listCupomReducer,
-  cupom: detailsCupomReducer
+  detailCupom: detailsCupomReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

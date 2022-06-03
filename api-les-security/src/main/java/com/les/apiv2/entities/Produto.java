@@ -1,12 +1,18 @@
 package com.les.apiv2.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import lombok.Data;
 
@@ -30,6 +36,25 @@ public class Produto implements Serializable {
 	private Integer countInStock;
 	private Float rating;
 	private Integer numReviews;
+	
+	@JsonIdentityReference(alwaysAsId = true)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private List<OrderDetail> orderDetails = new ArrayList<>();
+	
+	public Produto(Integer id, String name, String category, String image, String brand, String description,
+			Double price, Integer countInStock, Float rating, Integer numReviews, List<OrderDetail> orderDetails) {
+		this.id = id;
+		this.name = name;
+		this.category = category;
+		this.image = image;
+		this.brand = brand;
+		this.description = description;
+		this.price = price;
+		this.countInStock = countInStock;
+		this.rating = rating;
+		this.numReviews = numReviews;
+		this.orderDetails = orderDetails;
+	}
 	
 	public Produto() {
 		

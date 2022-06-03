@@ -1,6 +1,7 @@
 package com.les.apiv2.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,14 @@ public class OrderDetailService {
 		return repository.findAll();
 	}
 	
-	public OrderDetail findOneById(Integer id) {
-		OrderDetail order = repository.findOneOrderDetailWithProduto(id);
-		
-		return order;
+	public List<OrderDetail> graph (){
+		return repository.findAllOrdersGraph();
 	}
+	
+	public OrderDetail findOne(Integer id) {
+		Optional<OrderDetail> od = repository.findById(id);
+		return od.get();
+	}
+	
+
 }

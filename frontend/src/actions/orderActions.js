@@ -16,10 +16,11 @@ import {
   ORDER_USER_LIST_REQUEST,
   ORDER_USER_LIST_SUCCESS,
 } from '../constants/orderConstants';
-import { createCupom } from './cupomActions';
+import { createCupom, inactiveCupom } from './cupomActions';
 
 
-export const createOrder = (shippingAddressId, payCardId, cartItems, userId, itemsPrice, totalPrice, taxPrice, token) => async (dispatch) => {
+export const createOrder = (shippingAddressId, payCardId, cartItems, userId, itemsPrice, totalPrice, taxPrice, token, cupomId) => async (dispatch) => {
+  console.log(token);
   dispatch({
     type: ORDER_CREATE_REQUEST,
     payload: {
@@ -66,6 +67,13 @@ export const createOrder = (shippingAddressId, payCardId, cartItems, userId, ite
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     //dispatch({ type: CART_EMPTY });
     //localStorage.removeItem('cartItems');
+    if (cupomId) {
+      dispatch(inactiveCupom(cupomId, token));
+      if (totalPrice < 0) {
+        dispatch(createCupom(userId, token, (totalPrice * -1)))
+      }
+    }
+
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -74,6 +82,7 @@ export const createOrder = (shippingAddressId, payCardId, cartItems, userId, ite
           ? error.response.data.message
           : error.message,
     });
+
   }
 };
 

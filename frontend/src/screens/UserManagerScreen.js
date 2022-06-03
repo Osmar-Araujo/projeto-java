@@ -36,6 +36,11 @@ export default function UserManagerScreen(props) {
     props.history.push('/user/paycard');
   }
 
+  const cupomListHandler = (e) => {
+    e.preventDefault();
+    props.history.push('/user/cupom');
+  }
+
   useEffect(() => {
     dispatch(userDetailsAction(userInfo.id, token))
   }, [dispatch, userInfo.id, token])
@@ -102,6 +107,14 @@ export default function UserManagerScreen(props) {
                   <h2>Pedidos</h2>
                   <div>
                     <button onClick={orderListHandler}>Visualizar Pedidos Realizados</button>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="card card-body">
+                  <h2>Cupons</h2>
+                  <div>
+                    <button onClick={cupomListHandler}>Visualizar Cupons de Troca</button>
                   </div>
                 </div>
               </li>

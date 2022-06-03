@@ -24,6 +24,8 @@ import UserPayCardScreen from './screens/UserPayCardScreen';
 import AdminManagerScreen from './screens/AdminManagerScreen';
 import AdminManageOrderScreen from './screens/AdminManageOrderScreen';
 import AdminManageUserScreen from './screens/AdminManageUserScreen';
+import UserCuponsScreen from './screens/UserCuponsScreen';
+import SavedCupomScreen from './screens/SavedCupomScreen';
 
 function App() {
 
@@ -93,8 +95,10 @@ function App() {
                     <Route path="/order/:id" component={OrderDetailScreen}></Route>
                     <Route path="/orders" component={ManageOrderScreen}></Route>
                     <Route path="/savedCards" component={SavedCardsScreen}></Route>
+                    <Route path="/savedCupoms" component={SavedCupomScreen}></Route>
                     <Route path="/savedAddress" component={SavedAddressScreen}></Route>
                     <Route path="/address/set/:id" component={DetailsAddressScreen}></Route>
+                    <Route path="/user/cupom" component={UserCuponsScreen}></Route>
                     <Route path="/user/address/" component={UserAddressScreen}></Route>
                     <Route path="/user/paycard/" component={UserPayCardScreen}></Route>
                     <Route path="/user/change/address/:id" component={AddressManageScreen}></Route>
