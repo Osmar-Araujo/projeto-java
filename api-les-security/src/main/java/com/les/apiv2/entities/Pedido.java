@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,7 +45,10 @@ public class Pedido implements Serializable {
 	@OneToOne
 	private Cartao cartao;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "orderdetail_order", joinColumns = {
+//			@JoinColumn(name = "order_id", referencedColumnName = "id")}, inverseJoinColumns = {
+//					@JoinColumn(name = "orderdetail_id", referencedColumnName = "id") })
 	private List<OrderDetail> orderDetails = new ArrayList<>();
 	
 	/*
@@ -62,7 +65,7 @@ public class Pedido implements Serializable {
 
 	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao,
 			Double taxPrice, Double totalPrice, List<OrderDetail> orderDetails) {
-		super();
+	
 		this.id = id;
 		this.status = status;
 		this.endereco = endereco;
@@ -70,7 +73,7 @@ public class Pedido implements Serializable {
 		this.cartao = cartao;
 		this.taxPrice = taxPrice;
 		this.totalPrice = totalPrice;
-		this.orderDetails = orderDetails;
+		this.orderDetails = orderDetails.stream().map(pd -> new OrderDetail(pd)).collect(Collectors.toList());
 
 	}
 

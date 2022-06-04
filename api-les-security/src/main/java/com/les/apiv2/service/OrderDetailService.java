@@ -23,13 +23,17 @@ public class OrderDetailService {
 		return repository.findAll();
 	}
 	
-	public List<OrderDetail> graph (){
-		return repository.findAllOrdersGraph();
-	}
+//	public List<OrderDetail> graph (){
+//		return repository.findAllOrdersGraph();
+//	}
 	
 	public OrderDetail findOne(Integer id) {
 		Optional<OrderDetail> od = repository.findById(id);
 		return od.get();
+	}
+
+	public List<OrderDetail> findAll() {
+		return repository.findAll();
 	}
 	
 

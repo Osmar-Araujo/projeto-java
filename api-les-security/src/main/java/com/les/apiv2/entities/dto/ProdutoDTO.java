@@ -3,6 +3,7 @@ package com.les.apiv2.entities.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.les.apiv2.entities.OrderDetail;
 import com.les.apiv2.entities.Produto;
@@ -22,7 +23,6 @@ public class ProdutoDTO implements Serializable {
 	private Integer countInStock;
 	private Float rating;
 	private Integer numReviews;
-	
 	private List<OrderDetail> orderDetails = new ArrayList<>();
 	
 	public ProdutoDTO(Produto p) {
@@ -36,7 +36,6 @@ public class ProdutoDTO implements Serializable {
 		this.countInStock = p.getCountInStock();
 		this.rating = p.getRating();
 		this.numReviews = p.getNumReviews();
-		this.orderDetails = p.getOrderDetails();
 		}
 	
 	public ProdutoDTO() {

@@ -31,7 +31,6 @@ public class PedidoDTO implements Serializable {
 	private Double itemsPrice;
 	private Double taxPrice;
 	private Double totalPrice;
-	
 	private List<OrderDetail> orderDetails = new ArrayList<>();
 	
 	public PedidoDTO() {
@@ -48,6 +47,6 @@ public class PedidoDTO implements Serializable {
 		cartao = pedido.getCartao();
 		status = pedido.getStatus();
 		orderDetails = pedido.getOrderDetails();
-		//produtos = pedido.getProdutos().stream().map(p -> new ProdutoDTO(p)).collect(Collectors.toList());
+//		produtos = pedido.getProdutos().stream().map(p -> new ProdutoDTO(p)).collect(Collectors.toList());
 	}
 }

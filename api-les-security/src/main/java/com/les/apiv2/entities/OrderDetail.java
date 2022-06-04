@@ -1,6 +1,5 @@
 package com.les.apiv2.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -22,15 +19,22 @@ public class OrderDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name ="produto_id")
 	private Produto produto;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name ="pedido_id")
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
 	
 	private Long quantity;
+	
+	public OrderDetail(OrderDetail pd) {
+		this.id = pd.id;
+		this.produto = pd.produto;
+		this.quantity = pd.quantity;
+		this.produto = pd.produto;
+	}
 	
 	public OrderDetail() {
 		
@@ -39,17 +43,8 @@ public class OrderDetail {
 	public OrderDetail(Integer id, Produto produto, Pedido pedido, Long quantity) {
 		this.id = id;
 		this.produto = produto;
-		this.pedido = pedido;
 		this.quantity = quantity;
+		this.pedido = pedido;
 	}
 	
-	@JsonBackReference
-	public Produto getProduto() {
-		return produto;
-	}
-	
-	@JsonBackReference
-	public Pedido getPedido() {
-		return pedido;
-	}
 }

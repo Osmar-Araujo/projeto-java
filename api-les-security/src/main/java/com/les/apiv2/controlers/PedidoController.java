@@ -33,6 +33,12 @@ public class PedidoController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
+	@GetMapping
+	public ResponseEntity<List<Pedido>> listar(){
+		 List<Pedido> pedidos = pedidoService.findAll();
+		 return ResponseEntity.ok(pedidos);
+	}
+	
 	@GetMapping(value = "/pedido/{id}")
 	public ResponseEntity<Pedido> findOneById (@PathVariable ("id") Integer id){
 		Pedido pedido = pedidoService.findOne(id);

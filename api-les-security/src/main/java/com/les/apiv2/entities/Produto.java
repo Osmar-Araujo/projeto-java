@@ -3,6 +3,7 @@ package com.les.apiv2.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,8 +38,8 @@ public class Produto implements Serializable {
 	private Float rating;
 	private Integer numReviews;
 	
-	@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails = new ArrayList<>();
 	
 	public Produto(Integer id, String name, String category, String image, String brand, String description,
@@ -53,7 +54,7 @@ public class Produto implements Serializable {
 		this.countInStock = countInStock;
 		this.rating = rating;
 		this.numReviews = numReviews;
-		this.orderDetails = orderDetails;
+		this.orderDetails = orderDetails.stream().map(pd -> new OrderDetail(pd)).collect(Collectors.toList());
 	}
 	
 	public Produto() {

@@ -2,15 +2,16 @@ package com.les.apiv2.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.les.apiv2.entities.OrderDetail;
 import com.les.apiv2.entities.OrderStatus;
 import com.les.apiv2.entities.Pedido;
 import com.les.apiv2.entities.dto.PedidoDTO;
+import com.les.apiv2.repository.OrderDetailRepository;
 import com.les.apiv2.repository.PedidoRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class PedidoService {
 	
 	@Autowired
 	private PedidoRepository pedidoRep;
+	
+	@Autowired
+	private OrderDetailRepository orderRepository;
 	
 	
 	@Transactional
@@ -29,6 +33,11 @@ public class PedidoService {
 			pedido.getProdutos().add(produto.get());
 		}
 		*/
+	for(OrderDetail od : dto.getOrderDetails()) {
+		Optional<OrderDetail> orderDetail = orderRepository.findById(od.getId());
+		pedido.getOrderDetails().add(orderDetail.get());
+	}
+	
 	pedido = pedidoRep.save(pedido);
 	return new PedidoDTO(pedido);
 	}
@@ -75,5 +84,10 @@ public class PedidoService {
 		pedido.setStatus(OrderStatus.DEVOLVIDO);
 		pedido = pedidoRep.save(pedido);
 		return pedido;
+	}
+
+	public List<Pedido> findAll() {
+		return pedidoRep.findAll();
+		 
 	}
 }
