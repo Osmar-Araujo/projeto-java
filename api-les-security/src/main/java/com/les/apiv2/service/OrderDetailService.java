@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.les.apiv2.entities.OrderDetail;
+import com.les.apiv2.entities.dto.DetailDTO;
 import com.les.apiv2.repository.OrderDetailRepository;
 
 @Service
@@ -36,5 +37,14 @@ public class OrderDetailService {
 		return repository.findAll();
 	}
 	
+	public List<OrderDetail> findByPedido(Integer idPedido){
+		return repository.findByPedido(idPedido);
+	}
+	
+	
+	public DetailDTO detalharPedidoUnico(Integer id) {
+		DetailDTO dto = new DetailDTO(findOne(id));
+		return dto;
+	}
 
 }

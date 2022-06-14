@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.les.apiv2.entities.Pedido;
 import com.les.apiv2.entities.dto.PedidoDTO;
+import com.les.apiv2.entities.dto.PedidoRetornoDTO;
 import com.les.apiv2.service.PedidoService;
 
 @RestController
@@ -40,8 +41,8 @@ public class PedidoController {
 	}
 	
 	@GetMapping(value = "/pedido/{id}")
-	public ResponseEntity<Pedido> findOneById (@PathVariable ("id") Integer id){
-		Pedido pedido = pedidoService.findOne(id);
+	public ResponseEntity<PedidoRetornoDTO> findOneById (@PathVariable ("id") Integer id){
+		PedidoRetornoDTO pedido = pedidoService.findOne(id);
 		return ResponseEntity.ok(pedido);
 	}
 	

@@ -20,10 +20,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
-@NoArgsConstructor
+
 @Data
 @Entity
 @Table(name = "pedidos")
@@ -42,8 +41,10 @@ public class Pedido implements Serializable {
 	private Endereco endereco;
 	@OneToOne
 	private Usuario usuario;
-	@OneToOne
-	private Cartao cartao;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Pagamento> pagamentos = new ArrayList<>();
+	
 
 	@OneToMany(cascade = CascadeType.ALL)
 //	@JoinTable(name = "orderdetail_order", joinColumns = {
@@ -63,18 +64,22 @@ public class Pedido implements Serializable {
 
 	
 
-	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, Cartao cartao,
+	public Pedido(Integer id, OrderStatus status, Endereco endereco, Usuario usuario, List<Pagamento> pagamentos,
 			Double taxPrice, Double totalPrice, List<OrderDetail> orderDetails) {
 	
 		this.id = id;
 		this.status = status;
 		this.endereco = endereco;
 		this.usuario = usuario;
-		this.cartao = cartao;
+		this.pagamentos = pagamentos.stream().map(pag -> new Pagamento(pag)).collect(Collectors.toList());
 		this.taxPrice = taxPrice;
 		this.totalPrice = totalPrice;
 		this.orderDetails = orderDetails.stream().map(pd -> new OrderDetail(pd)).collect(Collectors.toList());
 
+	}
+	
+	public Pedido() {
+		
 	}
 
 }

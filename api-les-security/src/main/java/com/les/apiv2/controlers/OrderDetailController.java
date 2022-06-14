@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.les.apiv2.entities.OrderDetail;
+import com.les.apiv2.entities.dto.DetailDTO;
 import com.les.apiv2.service.OrderDetailService;
 
 @CrossOrigin
@@ -45,6 +46,18 @@ public class OrderDetailController {
 	public ResponseEntity<List<OrderDetail>> findAll(){
 		List<OrderDetail> orders = service.findAll();
 		return ResponseEntity.ok(orders);
+	}
+	
+	@GetMapping(value = "/pedido/{idPedido}")
+	public ResponseEntity<List<OrderDetail>> findByPedido(@PathVariable("idPedido") Integer idPedido){
+		List<OrderDetail> pedidos = service.findByPedido(idPedido);
+		return ResponseEntity.ok(pedidos);
+	}
+	
+	@GetMapping(value = "/detalhapedido/{id}")
+	public ResponseEntity<DetailDTO> detalhamentoPedido(@PathVariable("id") Integer id){
+		DetailDTO dto = service.detalharPedidoUnico(id);
+		return ResponseEntity.ok(dto);
 	}
 	
 }
